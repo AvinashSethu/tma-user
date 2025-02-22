@@ -1,7 +1,17 @@
+"use client";
 import Image from "next/image";
 import styles from "./page.module.css";
+import { useEffect } from "react";
 
 export default function Home() {
+  let deferredPrompt;
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+  }, []);
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -12,6 +22,16 @@ export default function Home() {
           width={180}
           height={38}
           priority
+          onClick={() => {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+              if (choiceResult.outcome === "accepted") {
+                console.log("User accepted the install prompt");
+              } else {
+                console.log("User dismissed the install prompt");
+              }
+            });
+          }}
         />
         <ol>
           <li>
