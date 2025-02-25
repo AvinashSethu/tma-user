@@ -1,33 +1,14 @@
 "use client";
-import { MoreVert } from "@mui/icons-material";
-import {
-  Card,
-  IconButton,
-  Menu,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import { Card, Stack, Typography } from "@mui/material";
 
 export default function SecondaryCard({
   icon,
   title,
-  options=[],
   subTitle,
   cardWidth,
   onClick,
   button,
-  Switch,
-  live,
 }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuOpen = (event) => {
-    setIsMenuOpen(event.currentTarget);
-  };
-  const menuClose = () => {
-    setIsMenuOpen(null);
-  };
-
   return (
     <Card
       sx={{
@@ -36,7 +17,7 @@ export default function SecondaryCard({
         border: "1px solid",
         borderColor: "var(--border-color)",
         borderRadius: "10px",
-        padding: "8px",
+        padding: "9px",
       }}
       elevation={0}
       onClick={onClick}
@@ -84,50 +65,7 @@ export default function SecondaryCard({
           flexDirection="row"
           gap="10px"
         >
-          {live}
-          {Switch}
           {button}
-          {options && (
-            <>
-              <IconButton
-                sx={{
-                  marginLeft: "auto",
-                  "&.MuiIconButton-root": {
-                    padding: "0px",
-                  },
-                }}
-                onClick={menuOpen}
-                disableRipple
-              >
-                <MoreVert sx={{ color: "var(--text3)" }} />
-              </IconButton>
-
-              <Menu
-                anchorEl={isMenuOpen}
-                open={Boolean(isMenuOpen)}
-                onClose={menuClose}
-                disableScrollLock={true}
-                sx={{"& .MuiList-root":{padding:"3px"}}}
-                slotProps={{
-                  paper: {
-                    style: {
-                      border: "1px solid",
-                      borderColor:"var(--border-color)",
-                      borderRadius:"7px",
-                      padding:"0px",
-                    },
-                  },
-                }}
-                elevation={0}
-              >
-                {options.map((option, index) => (
-                  <Stack key={index} onClick={menuClose}>
-                    {option}
-                  </Stack>
-                ))}
-              </Menu>
-            </>
-          )}
         </Stack>
       </Stack>
     </Card>

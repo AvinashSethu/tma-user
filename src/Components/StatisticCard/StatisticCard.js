@@ -1,11 +1,11 @@
 import { Card, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 
-export default function StatisticCard({ title, count }) {
+export default function StatisticCard({ icon, title, count }) {
   return (
     <Card
       sx={{
-        width: "170px",
+        minWidth: "165px",
         maxHeight: "140px",
         padding: "20px 16px",
         border: "1px solid",
@@ -28,7 +28,7 @@ export default function StatisticCard({ title, count }) {
             alignItems: "center",
           }}
         >
-          {/* <Image src={curve.src} alt="icon" width={12} height={10} /> */}
+          <Image src={icon} alt="icon" width={12} height={12} />
         </Stack>
 
         <Typography

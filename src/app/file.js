@@ -17,3 +17,17 @@ let deferredPrompt;
     //           }
     //         });
     //       }}
+
+    
+    // snackbar componet 
+    // const { enqueueSnackbar } = useSnackbar();
+    //   const handleClickVariant = (variant) => () => {
+    //     enqueueSnackbar("This is a success message!", { variant });
+    //   };
+    // <Button
+    //     variant="contained"
+    //     sx={{ textTransform: "none", margin: "10px" }}
+    //     onClick={handleClickVariant("success")}
+    //   >
+    //     variant snackbar
+    //   </Button>
