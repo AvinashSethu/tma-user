@@ -1,5 +1,6 @@
 "use client";
 import { Card, Stack, Typography } from "@mui/material";
+import Image from "next/image";
 
 export default function SecondaryCard({
   icon,
@@ -36,6 +37,7 @@ export default function SecondaryCard({
             }}
           >
             {icon}
+            {/* <Image src={icon} alt="icon" width={26} height={26} /> */}
           </Stack>
           <Stack gap="8px">
             <Typography

@@ -7,7 +7,7 @@ export default function PrimaryCard({ icon, title, subtitle, actionButton }) {
       sx={{
         width: "150px",
         height: "200px",
-        border: "1px solid",
+        border: "1px solid var(--border-color)",
         borderColor: "var(--border-color)",
         paddingTop: "20px",
         borderRadius: "10px",

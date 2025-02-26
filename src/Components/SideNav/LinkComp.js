@@ -21,7 +21,7 @@ export default function LinkComp({ isSideNavOpen }) {
       }}
     >
       {[
-        { icon:home.src, title: "Home", href: "/dashboard/home" },
+        { icon: home.src, title: "Home", href: "/dashboard/home" },
         {
           icon: dashboard.src,
           title: "Dashboard",
@@ -32,10 +32,9 @@ export default function LinkComp({ isSideNavOpen }) {
           title: "Exam",
           href: "#",
           list: [
-            // { title: "Course Bank", href: "/dashboard/exam/coursebank" },
-            // { title: "All Questions", href: "/dashboard/exam/allQuestions" },
-            // { title: "All Subjects", href: "/dashboard/exam/allSubjects" },
-            // { title: "All Exams", href: "/dashboard/exam/allExams" },
+            { title: "History", href: "/dashboard/exam/history" },
+            { title: "Exam", href: "/dashboard/exam/exam" },
+            { title: "Answers", href: "/dashboard/exam/answers" },
           ],
         },
 
@@ -50,20 +49,27 @@ export default function LinkComp({ isSideNavOpen }) {
           href: "/dashboard/myClassroom",
         },
       ].map((item, index) => (
-        <NavComp key={index} {...item} isSideNavOpen={isSideNavOpen} isRoot={true} />
+        <NavComp
+          key={index}
+          {...item}
+          isSideNavOpen={isSideNavOpen}
+          isRoot={true}
+        />
       ))}
     </Stack>
   );
 }
 
-const NavComp = ({ icon, title, list, href, isSideNavOpen }) => {
+const NavComp = ({ icon, title, list, href, isSideNavOpen, isRoot }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isNavOpen, setIsNavOpen] = useState(!isSideNavOpen);
 
   // const isActive = pathname === href || pathname.startsWith(href + "/");
-  const isActive =
-  pathname === href || (href !== "/dashboard" && pathname.startsWith(href + "/"));
+  const isActive = isRoot
+    ? pathname === href ||
+      (href !== "/dashboard" && pathname.startsWith(href + "/"))
+    : "";
   const isChildActive = list?.some((item) => pathname.startsWith(item.href));
 
   const handleNavigation = (url) => {
@@ -100,9 +106,16 @@ const NavComp = ({ icon, title, list, href, isSideNavOpen }) => {
           <Stack
             flexDirection="row"
             alignItems="center"
+            width="100%"
             onClick={() => list && setIsNavOpen((prev) => !prev)}
           >
-            <Stack direction="row" alignItems="center" gap="10px" height="20px">
+            <Stack
+              direction="row"
+              alignItems="center"
+              gap="10px"
+              height="20px"
+              width={"100%"}
+            >
               <Image src={icon} alt={title} width={16} height={16} />
               {!isSideNavOpen && (
                 <Typography
@@ -121,9 +134,9 @@ const NavComp = ({ icon, title, list, href, isSideNavOpen }) => {
               <ExpandMore
                 sx={{
                   color: "var(--primary-color)",
+                  marginLeft: "auto",
                   transform: isNavOpen ? "rotate(180deg)" : "rotate(0deg)",
-                  transition: "transform 0.3s ease",
-                  marginLeft:"auto"
+                  transition: "transform 0.5s ease",
                 }}
               />
             )}

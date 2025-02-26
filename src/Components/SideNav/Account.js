@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
-// import more_img from "@/src/public/icons/More.svg";
-// import students_img from "@/src/public/icons/Students.svg";
-// import logout_img from "@/src/public/icons/Logout.svg";
+import more_img from "@/public/icons/More.svg";
+import students_img from "@/public/icons/Students.svg";
+import logout_img from "@/public/icons/Logout.svg";
 
 export default function Account({ isSideNavOpen }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -34,7 +34,7 @@ export default function Account({ isSideNavOpen }) {
           alignItems: "center",
           justifyContent: "space-between",
           marginTop: "auto",
-          borderRadius: "23px",
+          borderRadius: "28px",
           cursor: "pointer",
           padding: isSideNavOpen ? "9px" : "4px 12px 4px 4px",
           backgroundColor: open ? "var(--primary-color-acc-2)" : "transparent",
@@ -58,7 +58,7 @@ export default function Account({ isSideNavOpen }) {
             </Typography>
           )}
         </Stack>
-        {/* {!isSideNavOpen && (
+        {!isSideNavOpen && (
           <Image
             src={more_img.src}
             alt="more"
@@ -69,9 +69,8 @@ export default function Account({ isSideNavOpen }) {
               transition: "all .5s ease",
             }}
           />
-        )} */}
+        )}
       </Stack>
-
       <Menu
         anchorEl={anchorEl}
         open={open}
@@ -100,7 +99,9 @@ export default function Account({ isSideNavOpen }) {
         elevation={0}
       >
         <MenuItem
-          onClick={handleClose}
+          onClick={() => {
+            router.push("/dashboard/profile"), handleClose();
+          }}
           sx={{
             gap: "15px",
             fontFamily: "Lato",
@@ -108,14 +109,10 @@ export default function Account({ isSideNavOpen }) {
             fontWeight: "700",
           }}
         >
-          {/* <Image src={students_img.src} alt="profile" width={16} height={16} /> */}
+          <Image src={students_img.src} alt="profile" width={16} height={16} />
           Profile
         </MenuItem>
         <MenuItem
-          onClick={() => {
-            router.push("/api/logout");
-            handleClose();
-          }}
           sx={{
             gap: "15px",
             fontFamily: "Lato",
@@ -123,7 +120,7 @@ export default function Account({ isSideNavOpen }) {
             fontWeight: "700",
           }}
         >
-          {/* <Image src={logout_img.src} alt="profile" width={16} height={16} /> */}
+          <Image src={logout_img.src} alt="profile" width={16} height={16} />
           Logout
         </MenuItem>
       </Menu>

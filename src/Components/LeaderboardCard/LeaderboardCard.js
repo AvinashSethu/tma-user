@@ -1,6 +1,6 @@
 import { Avatar, Stack, Typography } from "@mui/material";
 
-export default function LeaderboardCard({ name }) {
+export default function LeaderboardCard({ sNo,name, points }) {
   return (
     <Stack
       flexDirection="row"
@@ -27,17 +27,17 @@ export default function LeaderboardCard({ name }) {
             alignItems: "center",
           }}
         >
-          1
+          {sNo}
         </Stack>
         <Avatar />
         <Stack gap="5px">
           <Typography sx={{ fontFamily: "Lato", fontSize: "14px" }}>
-            {"name"}
+            {name}
           </Typography>
           <Typography
             sx={{ fontFamily: "Lato", fontSize: "10px", color: "var(--text3)" }}
           >
-            {"Points"}
+            {points}
           </Typography>
         </Stack>
       </Stack>

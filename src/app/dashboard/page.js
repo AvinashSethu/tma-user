@@ -15,6 +15,13 @@ import week1 from "@/public/icons/week1.svg";
 import week2 from "@/public/icons/week2.svg";
 
 export default function Home() {
+  const leaderboardList = [
+    { sNo: 1, name: "Mira", points: "200 points" },
+    { sNo: 2, name: "Priya", points: "180 points" },
+    { sNo: 3, name: "Aarav", points: "160 points" },
+    { sNo: 4, name: "Mira", points: "150 points" },
+    { sNo: 5, name: "Mira", points: "140 points" },
+  ];
   const [quiz, setQuiz] = useState([]);
   const weeklyQuiz = [
     {
@@ -204,17 +211,15 @@ export default function Home() {
               gap: "10px",
             }}
           >
-            <LeaderboardCard />
-            <LeaderboardCard />
-            <LeaderboardCard />
-            <LeaderboardCard />
-            <LeaderboardCard />
+            {leaderboardList.map((item, index) => (
+              <LeaderboardCard key={index} {...item} />
+            ))}
             <Typography
               sx={{ fontFamily: "Lato", fontSize: "16px", fontWeight: "700" }}
             >
               Your Rank
             </Typography>
-            <LeaderboardCard />
+            <LeaderboardCard sNo={1} name="Mira" points="200 points" />
           </Stack>
         </Stack>
       </Stack>

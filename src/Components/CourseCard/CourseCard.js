@@ -83,7 +83,7 @@ export default function CourseCard({
           </Stack>
           <Stack flexDirection="row" alignItems="center" gap="10px">
             <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
-              {`${0} Lessons`}
+              {lessons}
             </Typography>
             <Circle sx={{ fontSize: "10px", color: "var(--border-color)" }} />
             <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>

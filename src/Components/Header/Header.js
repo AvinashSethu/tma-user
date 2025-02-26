@@ -20,7 +20,7 @@ export default function Header({ button = [], back }) {
         border: "1px solid",
         borderColor: "var(--border-color)",
         backgroundColor: "var(--white)",
-        paddingLeft: "25px",
+        padding: "0px 25px",
         borderRadius: "8px",
         height: "60px",
       }}

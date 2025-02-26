@@ -1,5 +1,5 @@
 "use client";
-import StyledTextField from "@/Components/StyledTextField/StyledTextField";
+import StyledTextField from "@/src/Components/StyledTextField/StyledTextField";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 

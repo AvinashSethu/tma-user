@@ -1,11 +1,13 @@
 import PrimaryCard from "@/src/Components/PrimaryCard/PrimaryCard";
 import { East } from "@mui/icons-material";
 import { Button, Stack } from "@mui/material";
+import gate_cse from "@/public/icons/gate_cse.svg";
 
 export default function PracticeTest() {
   const practiceTest = [
     {
       title: "GATE CSE",
+      icon: gate_cse.src,
       subtitle: "Top 5 Questions Quiz",
       button: (
         <Button
@@ -24,6 +26,7 @@ export default function PracticeTest() {
     },
     {
       title: "Banking",
+      icon: gate_cse.src,
       subtitle: "Programming Quiz",
       button: (
         <Button
@@ -42,6 +45,7 @@ export default function PracticeTest() {
     },
     {
       title: "Placements",
+      icon: gate_cse.src,
       subtitle: "Digital Logic Quiz",
       button: (
         <Button
@@ -60,6 +64,7 @@ export default function PracticeTest() {
     },
     {
       title: "Placements",
+      icon: gate_cse.src,
       subtitle: "Mathematics Quiz",
       button: (
         <Button
@@ -85,6 +90,7 @@ export default function PracticeTest() {
           title={item.title}
           subtitle={item.subtitle}
           actionButton={item.button}
+          icon={item.icon}
         />
       ))}
     </Stack>

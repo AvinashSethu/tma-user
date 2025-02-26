@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
-import SignInBanner from "../signUp/Components/SignInBanner";
 import SignInPage from "./Components/SignInPage";
+import SignInBanner from "../signUp/Components/SignInBanner";
 
 export default function SignIn() {
   return (

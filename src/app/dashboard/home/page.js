@@ -1,6 +1,5 @@
 "use client";
 import { Stack, Typography } from "@mui/material";
-import Image from "next/image";
 import homeBanner from "@/public/images/homeBanner.svg";
 import Header from "@/src/Components/Header/Header";
 import GoalsList from "./Components/GoalsList";
@@ -15,12 +14,10 @@ export default function Home() {
         <Header />
       </Stack>
       <Stack width="100%">
-        <Image
+        <img
           src={homeBanner.src}
           alt="banner"
-          width={1180}
-          height={500}
-          style={{ borderRadius: "10px" }}
+          style={{ borderRadius: "15px" }}
         />
       </Stack>
       <Stack
@@ -34,6 +31,7 @@ export default function Home() {
       ></Stack>
       <Stack gap="20px">
         <Typography
+          component="span"
           sx={{ fontFamily: "Lato", fontSize: "16px", fontWeight: "700" }}
         >
           Goals
@@ -42,6 +40,7 @@ export default function Home() {
       </Stack>
       <Stack gap="20px">
         <Typography
+          component="span"
           sx={{ fontFamily: "Lato", fontSize: "16px", fontWeight: "700" }}
         >
           Free Tests
@@ -50,6 +49,7 @@ export default function Home() {
       </Stack>
       <Stack gap="20px">
         <Typography
+          component="span"
           sx={{ fontFamily: "Lato", fontSize: "16px", fontWeight: "700" }}
         >
           Practice Test

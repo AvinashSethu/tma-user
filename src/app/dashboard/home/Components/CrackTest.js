@@ -1,5 +1,7 @@
 import { Button, Stack, Typography } from "@mui/material";
 import Image from "next/image";
+import institute from "@/public/icons/institute1.svg";
+import agrade from "@/public/icons/aGrade.svg";
 
 export default function CrackTest() {
   return (
@@ -69,7 +71,7 @@ export default function CrackTest() {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-            ></Stack>
+            ><Image src={institute.src} alt="" width={26} height={26} style={{color:"red"}}  /></Stack>
             <Typography
               sx={{
                 fontFamily: "Lato",
@@ -102,7 +104,7 @@ export default function CrackTest() {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-            ></Stack>
+            ><Image src={agrade.src} alt="" width={26} height={26} style={{color:"red"}}  /></Stack>
             <Typography
               sx={{
                 fontFamily: "Lato",
@@ -135,7 +137,9 @@ export default function CrackTest() {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-            ></Stack>
+            >
+              <Image src={agrade.src} alt="" width={26} height={26} style={{color:"red"}}  />
+            </Stack>
             <Typography
               sx={{
                 fontFamily: "Lato",
