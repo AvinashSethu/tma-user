@@ -7,24 +7,31 @@ import Exams from "./Components/Exams";
 import { useRouter } from "next/navigation";
 
 export default function Classroom() {
-    const router = useRouter();
+  const router = useRouter();
   return (
     <Stack padding="20px" gap="20px">
-      <Header />
-      <Stack flexDirection="row" alignItems="center" gap="6px">
-        <ArrowBackIosNewRounded fontSize="small" onClick={() => router.back()} sx={{cursor:"pointer"}} />
-        <Typography sx={{fontFamily:"Lato",fontSize:"18px",fontWeight:"700"}}>Ece 3rd year</Typography>
-        <Button
-          variant="contained"
-          sx={{
-            textTransform: "none",
-            fontFamily: "Lato",
-            backgroundColor: "var(--primary-color)",
-            marginLeft: "auto",
-          }}
+      <Stack
+        flexDirection="row"
+        alignItems="center"
+        gap="6px"
+        sx={{
+          backgroundColor: "var(--white)",
+          borderRadius: "10px",
+          height: "60px",
+          border: "1px solid var(--border-color)",
+          padding: "10px",
+        }}
+      >
+        <ArrowBackIosNewRounded
+          fontSize="small"
+          onClick={() => router.back()}
+          sx={{ cursor: "pointer" }}
+        />
+        <Typography
+          sx={{ fontFamily: "Lato", fontSize: "18px", fontWeight: "700" }}
         >
-          History
-        </Button>
+          Ece 3rd year
+        </Typography>
       </Stack>
       <Stack gap="10px">
         <Typography

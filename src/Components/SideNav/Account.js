@@ -54,7 +54,7 @@ export default function Account({ isSideNavOpen }) {
                 color: "var(--primary-color)",
               }}
             >
-              Abishek
+              My Account
             </Typography>
           )}
         </Stack>

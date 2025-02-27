@@ -18,11 +18,6 @@ export default function Courses() {
       <Header button={[<SearchBox key={"search"} />]} />
       <Stack flexDirection="row">
         <CustomTabs tabs={tabData} />
-        <Stack>
-          {/* <Stack sx={{ width: "400px" }}> */}
-          {/* <SearchBox /> */}
-          {/* </Stack> */}
-        </Stack>
       </Stack>
     </Stack>
   );

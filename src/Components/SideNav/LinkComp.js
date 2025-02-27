@@ -33,8 +33,7 @@ export default function LinkComp({ isSideNavOpen }) {
           href: "#",
           list: [
             { title: "History", href: "/dashboard/exam/history" },
-            { title: "Exam", href: "/dashboard/exam/exam" },
-            { title: "Answers", href: "/dashboard/exam/answers" },
+            { title: "Available Exams", href: "/dashboard/exam/exams" },
           ],
         },
 
@@ -74,7 +73,6 @@ const NavComp = ({ icon, title, list, href, isSideNavOpen, isRoot }) => {
 
   const handleNavigation = (url) => {
     router.push(url);
-    setIsNavOpen(false);
   };
 
   useEffect(() => {
@@ -145,7 +143,7 @@ const NavComp = ({ icon, title, list, href, isSideNavOpen, isRoot }) => {
       </Tooltip>
 
       {isNavOpen && list && (
-        <Stack sx={{ pl: "15px", mt: "10px", gap: "2px" }}>
+        <Stack sx={{ pl: "25px", mt: "0px", gap: "2px" }}>
           {list.map((item, index) => (
             <Typography
               key={index}

@@ -1,6 +1,6 @@
 import { Avatar, Stack, Typography } from "@mui/material";
 
-export default function LeaderboardCard({ sNo,name, points }) {
+export default function LeaderboardCard({ sNo, name, points }) {
   return (
     <Stack
       flexDirection="row"
@@ -41,7 +41,10 @@ export default function LeaderboardCard({ sNo,name, points }) {
           </Typography>
         </Stack>
       </Stack>
-      <Avatar />
+      <Avatar
+        sx={{ backgroundColor: "var(--sec-color)", padding: "4px" }}
+        // src={crown.src}
+      />
     </Stack>
   );
 }

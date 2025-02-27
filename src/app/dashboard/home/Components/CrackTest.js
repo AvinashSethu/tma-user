@@ -2,6 +2,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import institute from "@/public/icons/institute1.svg";
 import agrade from "@/public/icons/aGrade.svg";
+import crackExamBanner from "@/public/images/crackExamBanner.svg";
 
 export default function CrackTest() {
   return (
@@ -13,7 +14,7 @@ export default function CrackTest() {
         backgroundColor: "var(--white)",
         width: "100%",
         height: "550px",
-        padding: "30px 20px",
+        padding: "30px 40px",
         justifyContent: "space-between",
       }}
     >
@@ -22,13 +23,13 @@ export default function CrackTest() {
           sx={{
             borderBottom: "1px solid var(--text4)",
             gap: "20px",
-            width: "480px",
+            width: "550px",
           }}
         >
           <Typography
             sx={{
               fontFamily: "Lato",
-              fontSize: "20px",
+              fontSize: "24px",
               fontWeight: "700",
               color: "var(--text3)",
             }}
@@ -38,9 +39,9 @@ export default function CrackTest() {
           <Typography
             sx={{
               fontFamily: "Lato",
-              fontSize: "16px",
+              fontSize: "18px",
               color: "var(--text3)",
-              width: "390px",
+              width: "400px",
             }}
           >
             Get subscription and access unlimited exams and stream courses from
@@ -60,7 +61,7 @@ export default function CrackTest() {
             Subscribe
           </Button>
         </Stack>
-        <Stack flexDirection="row" gap="10px">
+        <Stack flexDirection="row" gap="25px">
           <Stack gap="10px">
             <Stack
               sx={{
@@ -71,7 +72,9 @@ export default function CrackTest() {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-            ><Image src={institute.src} alt="" width={26} height={26} style={{color:"red"}}  /></Stack>
+            >
+              <Image src={institute.src} alt="" width={34} height={28} />
+            </Stack>
             <Typography
               sx={{
                 fontFamily: "Lato",
@@ -104,7 +107,15 @@ export default function CrackTest() {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-            ><Image src={agrade.src} alt="" width={26} height={26} style={{color:"red"}}  /></Stack>
+            >
+              <Image
+                src={agrade.src}
+                alt=""
+                width={26}
+                height={26}
+                style={{ color: "red" }}
+              />
+            </Stack>
             <Typography
               sx={{
                 fontFamily: "Lato",
@@ -138,7 +149,13 @@ export default function CrackTest() {
                 alignItems: "center",
               }}
             >
-              <Image src={agrade.src} alt="" width={26} height={26} style={{color:"red"}}  />
+              <Image
+                src={agrade.src}
+                alt=""
+                width={26}
+                height={26}
+                style={{ color: "red" }}
+              />
             </Stack>
             <Typography
               sx={{
@@ -166,7 +183,7 @@ export default function CrackTest() {
       </Stack>
       <Stack>
         <Image
-          src="/images/crackExamBanner.svg"
+          src={crackExamBanner.src}
           alt=""
           width={500}
           height={500}

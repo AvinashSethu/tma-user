@@ -67,11 +67,49 @@ export default function FreeTest() {
         </Button>
       ),
     },
+    {
+      title: "Banking Full Mock Test ",
+      icon: mocks.src,
+      subtitle: (
+        <Stack flexDirection="row" gap="20px">
+          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+            Banking 2024
+          </Typography>
+          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+            120 Questions
+          </Typography>
+          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+            30 Minutes
+          </Typography>
+        </Stack>
+      ),
+      button: (
+        <Button
+          variant="text"
+          endIcon={<East />}
+          sx={{
+            textTransform: "none",
+            fontFamily: "Lato",
+            color: "var(--primary-color)",
+            fontSize: "12px",
+          }}
+        >
+          Enrolled
+        </Button>
+      ),
+    },
   ];
   return (
-    <Stack gap="15px">
+    <Stack
+      justifyContent="space-between"
+      gap="15px"
+      flexDirection="row"
+      flexWrap="wrap"
+      width="100%"
+    >
       {goalDetails.map((item, index) => (
         <SecondaryCard
+          cardWidth="49%"
           key={index}
           title={item.title}
           subTitle={item.subtitle}

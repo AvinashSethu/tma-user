@@ -32,8 +32,7 @@ export default function Header({ button = [], back }) {
               router.back();
             }}
             sx={{
-              color: "var(--sec-color)",
-              fontSize: "18px",
+              fontSize: "20px",
               cursor: "pointer",
               fontWeight: "700",
             }}

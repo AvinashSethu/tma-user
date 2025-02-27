@@ -4,8 +4,10 @@ import { Button, Stack, Typography } from "@mui/material";
 import gate_cse from "@/public/icons/gate_cse.svg";
 import banking from "@/public/icons/banking.svg";
 import placements from "@/public/icons/placements.svg";
+import { useRouter } from "next/navigation";
 
 export default function GoalsList() {
+  const router = useRouter();
   const goalDetails = [
     {
       title: "GATE CSE",
@@ -14,6 +16,7 @@ export default function GoalsList() {
         <Button
           variant="text"
           endIcon={<East />}
+          onClick={() => router.push("/dashboard/home/1")}
           sx={{
             textTransform: "none",
             fontFamily: "Lato",
@@ -24,6 +27,7 @@ export default function GoalsList() {
           Enrolled
         </Button>
       ),
+      enrolled: true,
     },
     {
       title: "Banking",
@@ -82,14 +86,17 @@ export default function GoalsList() {
   ];
   return (
     <Stack flexDirection="row" gap="20px">
-      {goalDetails.map((item, index) => (
-        <PrimaryCard
-          key={index}
-          title={item.title}
-          actionButton={item.button}
-          icon={item.icon}
-        />
-      ))}
+      {goalDetails.length > 0
+        ? goalDetails.map((item, index) => (
+            <PrimaryCard
+              key={index}
+              title={item.title}
+              actionButton={item.button}
+              icon={item.icon}
+              enrolled={item.enrolled}
+            />
+          ))
+        : "No Data"}
     </Stack>
   );
 }

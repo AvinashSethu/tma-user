@@ -3,7 +3,7 @@ import DialogBox from "@/src/Components/DialogBox/DialogBox";
 import Header from "@/src/Components/Header/Header";
 import SecondaryCard from "@/src/Components/SecondaryCard/SecondaryCard";
 import StyledTextField from "@/src/Components/StyledTextField/StyledTextField";
-import { Close, East, Groups, MoreVert } from "@mui/icons-material";
+import { Close, East, MoreVert } from "@mui/icons-material";
 import {
   Button,
   DialogContent,
@@ -13,21 +13,22 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import group from "@/public/icons/group.svg";
 
 export default function MyClassroom() {
-    const router = useRouter();
+  const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const dialogOpen = () => setIsDialogOpen(true);
   const dialogClose = () => setIsDialogOpen(false);
   const classroomList = [
     {
       title: "ECE 3rd year",
-      icon: <Groups fontSize="large" sx={{ color: "var(--sec-color)" }} />,
+      icon: group.src,
       button: <MoreVert />,
     },
     {
       title: "Placement PSREC",
-      icon: <Groups fontSize="large" sx={{ color: "var(--sec-color)" }} />,
+      icon: group.src,
       button: <MoreVert />,
     },
   ];
@@ -62,9 +63,7 @@ export default function MyClassroom() {
               title={
                 <span
                   onClick={() => {
-                    router.push(
-                      `/dashboard/myClassroom/1`
-                    );
+                    router.push(`/dashboard/myClassroom/1`);
                   }}
                   style={{ cursor: "pointer" }}
                 >

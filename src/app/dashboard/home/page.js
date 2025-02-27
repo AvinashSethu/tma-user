@@ -6,8 +6,9 @@ import GoalsList from "./Components/GoalsList";
 import FreeTest from "./Components/FreeTest";
 import PracticeTest from "./Components/PracticeTest";
 import CrackTest from "./Components/CrackTest";
+import InfoCard from "./Components/InfoCard";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <Stack padding="20px" gap="20px">
       <Stack>
@@ -20,15 +21,7 @@ export default function Home() {
           style={{ borderRadius: "15px" }}
         />
       </Stack>
-      <Stack
-        sx={{
-          border: "1px solid var(--border-color)",
-          borderRadius: "5px",
-          width: "100%",
-          minHeight: "120px",
-          backgroundColor: "var(--white)",
-        }}
-      ></Stack>
+      <InfoCard />
       <Stack gap="20px">
         <Typography
           component="span"

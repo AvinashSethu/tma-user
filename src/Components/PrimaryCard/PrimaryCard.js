@@ -1,13 +1,21 @@
 import { Card, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 
-export default function PrimaryCard({ icon, title, subtitle, actionButton }) {
+export default function PrimaryCard({
+  icon,
+  title,
+  subtitle,
+  actionButton,
+  enrolled,
+}) {
   return (
     <Card
       sx={{
         width: "150px",
         height: "200px",
-        border: "1px solid var(--border-color)",
+        border: enrolled
+          ? "2px solid var(--primary-color)"
+          : "1px solid var(--border-color)",
         borderColor: "var(--border-color)",
         paddingTop: "20px",
         borderRadius: "10px",

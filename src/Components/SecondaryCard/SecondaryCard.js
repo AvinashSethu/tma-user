@@ -36,8 +36,8 @@ export default function SecondaryCard({
               alignItems: "center",
             }}
           >
-            {icon}
-            {/* <Image src={icon} alt="icon" width={26} height={26} /> */}
+            {/* {icon} */}
+            <Image src={icon} alt="icon" width={26} height={26} />
           </Stack>
           <Stack gap="8px">
             <Typography

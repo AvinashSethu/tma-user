@@ -51,44 +51,6 @@ export default function MyCourses() {
         </Button>
       ),
     },
-    {
-      title: "General Aptitude",
-      thumbnail: defaultThumbnail.src,
-      lessons: "16",
-      hours: "48 hours",
-      actionButton: (
-        <Button
-          variant="text"
-          endIcon={<East sx={{ width: "16px", height: "16px" }} />}
-          sx={{
-            textTransform: "none",
-            color: "var(--primary-color)",
-            fontSize: "12px",
-          }}
-        >
-          View
-        </Button>
-      ),
-    },
-    {
-      title: "General Aptitude",
-      thumbnail: defaultThumbnail.src,
-      lessons: "16",
-      hours: "48 hours",
-      actionButton: (
-        <Button
-          variant="text"
-          endIcon={<East sx={{ width: "16px", height: "16px" }} />}
-          sx={{
-            textTransform: "none",
-            color: "var(--primary-color)",
-            fontSize: "12px",
-          }}
-        >
-          View
-        </Button>
-      ),
-    },
   ];
   return (
     <Stack flexDirection="row" flexWrap="wrap" rowGap="20px" columnGap="10px">
