@@ -21,7 +21,7 @@ export default function Header({ button = [], back }) {
         borderColor: "var(--border-color)",
         backgroundColor: "var(--white)",
         padding: "0px 25px",
-        borderRadius: "8px",
+        borderRadius: {xs:"0px",md:"10px"},
         height: "60px",
       }}
     >

@@ -22,7 +22,7 @@ export default function CourseCard({
   return (
     <Card
       sx={{
-        width: "200px",
+        width: { xs: "180px", sm: "200px" },
         minHeight: "250px",
         border: "1px solid",
         borderColor: "var(--border-color)",

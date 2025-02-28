@@ -14,6 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import group from "@/public/icons/group.svg";
+import MobileHeader from "@/src/Components/MobileHeader/MobileHeader";
 
 export default function MyClassroom() {
   const router = useRouter();
@@ -33,53 +34,60 @@ export default function MyClassroom() {
     },
   ];
   return (
-    <Stack padding="20px" gap="20px">
-      <Header />
-      <Stack
-        flexDirection="row"
-        sx={{ width: "100%", justifyContent: "space-between" }}
-      >
-        <Typography
-          sx={{ fontFamily: "Lato", fontSize: "20px", fontWeight: "700" }}
+    <>
+      <MobileHeader />
+
+      <Stack padding="20px" gap="20px">
+        <Stack sx={{ display: { xs: "none", md: "block" } }}>
+          <Header />
+        </Stack>
+
+        <Stack
+          flexDirection="row"
+          sx={{ width: "100%", justifyContent: "space-between" }}
         >
-          My Classroom
-        </Typography>
-        <Button
-          variant="contained"
-          onClick={dialogOpen}
-          sx={{
-            textTransform: "none",
-            backgroundColor: "var(--primary-color)",
-          }}
-          disableElevation
-        >
-          Join Classroom
-        </Button>
+          <Typography
+            sx={{ fontFamily: "Lato", fontSize: "20px", fontWeight: "700" }}
+          >
+            My Classroom
+          </Typography>
+          <Button
+            variant="contained"
+            onClick={dialogOpen}
+            sx={{
+              textTransform: "none",
+              backgroundColor: "var(--primary-color)",
+            }}
+            disableElevation
+          >
+           Join Batch
+          </Button>
+        </Stack>
+        {classroomList.length > 0
+          ? classroomList.map((item, index) => (
+              <SecondaryCard
+                key={index}
+                title={
+                  <span
+                    onClick={() => {
+                      router.push(`/dashboard/myClassroom/1`);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {item.title}
+                  </span>
+                }
+                icon={item.icon}
+                button={item.button}
+              />
+            ))
+          : "No"}
+        <JoinClassroomDialog
+          isDialogOpen={isDialogOpen}
+          dialogClose={dialogClose}
+        />
       </Stack>
-      {classroomList.length > 0
-        ? classroomList.map((item, index) => (
-            <SecondaryCard
-              key={index}
-              title={
-                <span
-                  onClick={() => {
-                    router.push(`/dashboard/myClassroom/1`);
-                  }}
-                  style={{ cursor: "pointer" }}
-                >
-                  {item.title}
-                </span>
-              }
-              icon={item.icon}
-              button={item.button}
-            />
-          ))
-        : "No"}
-      <JoinClassroomDialog
-        isDialogOpen={isDialogOpen}
-        dialogClose={dialogClose}
-      />
-    </Stack>
+    </>
   );
 }
 

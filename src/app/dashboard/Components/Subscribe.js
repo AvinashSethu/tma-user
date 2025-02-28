@@ -5,7 +5,7 @@ import SubscribeBanner from "@/public/images/subscribeBanner.svg";
 export default function Subscribe() {
   return (
     <Stack
-      flexDirection="row"
+      flexDirection={{ xs: "column", md: "row" }}
       sx={{
         border: "1px solid var(--border-color)",
         borderRadius: "10px",

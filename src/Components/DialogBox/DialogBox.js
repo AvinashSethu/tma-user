@@ -21,11 +21,12 @@ export default function DialogBox({
       TransitionComponent={Slide}
       sx={{
         "& .MuiDialog-paper": {
-          minWidth: "600px",
-          maxWidth: "650px",
+          width: "600px",
+          maxWidth: { xs: "100%", md: "600px" },
           borderRadius: "10px",
           border: "1px solid",
           borderColor: "var(--border-color)",
+          padding:"0px"
         },
       }}
     >

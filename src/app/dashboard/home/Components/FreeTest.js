@@ -13,10 +13,10 @@ export default function FreeTest() {
           <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
             GATE CSE 2024
           </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
             120 Questions
           </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
             30 Minutes
           </Typography>
         </Stack>
@@ -44,10 +44,10 @@ export default function FreeTest() {
           <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
             Banking 2024
           </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
             120 Questions
           </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
             30 Minutes
           </Typography>
         </Stack>
@@ -75,10 +75,10 @@ export default function FreeTest() {
           <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
             Banking 2024
           </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
             120 Questions
           </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
             30 Minutes
           </Typography>
         </Stack>

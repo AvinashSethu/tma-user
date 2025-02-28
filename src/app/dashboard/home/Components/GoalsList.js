@@ -1,6 +1,6 @@
 import PrimaryCard from "@/src/Components/PrimaryCard/PrimaryCard";
 import { East } from "@mui/icons-material";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Box } from "@mui/material";
 import gate_cse from "@/public/icons/gate_cse.svg";
 import banking from "@/public/icons/banking.svg";
 import placements from "@/public/icons/placements.svg";
@@ -83,20 +83,55 @@ export default function GoalsList() {
         </Button>
       ),
     },
+    {
+      title: "Placements",
+      icon: placements.src,
+      button: (
+        <Button
+          variant="text"
+          endIcon={<East />}
+          sx={{
+            textTransform: "none",
+            fontFamily: "Lato",
+            color: "var(--primary-color)",
+            fontSize: "12px",
+          }}
+        >
+          View
+        </Button>
+      ),
+    },
   ];
+
   return (
-    <Stack flexDirection="row" gap="20px">
-      {goalDetails.length > 0
-        ? goalDetails.map((item, index) => (
+    <Box
+      sx={{
+        overflowX: { xs: "auto", md: "" },
+        whiteSpace: "nowrap",
+        scrollbarWidth: "none",
+        "&::-webkit-scrollbar": { display: "none" },
+        width: "100%",
+      }}
+    >
+      <Stack
+        flexDirection="row"
+        flexWrap={{ xs: "wrap" }}
+        gap="10px"
+        sx={{
+          minWidth: { xs: "max-content", md: "100%" },
+        }}
+      >
+        {goalDetails.map((item, index) => (
+          <Box key={index} sx={{ flex: "0 0 auto", width: "150px" }}>
             <PrimaryCard
-              key={index}
               title={item.title}
               actionButton={item.button}
               icon={item.icon}
               enrolled={item.enrolled}
             />
-          ))
-        : "No Data"}
-    </Stack>
+          </Box>
+        ))}
+      </Stack>
+    </Box>
   );
 }

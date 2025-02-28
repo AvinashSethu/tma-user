@@ -23,6 +23,7 @@ export default function SideNav() {
       sx={{
         borderRight: "1px solid var(--border-color)",
         position: "relative",
+        display: { xs: "none", md: "block" },
       }}
     >
       <Stack

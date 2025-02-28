@@ -14,7 +14,7 @@ export default function SecondaryCard({
     <Card
       sx={{
         width: cardWidth,
-        height: "80px",
+        // height: "80px",
         border: "1px solid",
         borderColor: "var(--border-color)",
         borderRadius: "10px",
@@ -36,7 +36,6 @@ export default function SecondaryCard({
               alignItems: "center",
             }}
           >
-            {/* {icon} */}
             <Image src={icon} alt="icon" width={26} height={26} />
           </Stack>
           <Stack gap="8px">

@@ -26,7 +26,7 @@ export default function Exams() {
     },
   ];
   return (
-    <Stack>
+    <Stack gap="20px" overflowy="auto">
       {examList.map((item, index) => (
         <PrimaryCard key={index} {...item} />
       ))}

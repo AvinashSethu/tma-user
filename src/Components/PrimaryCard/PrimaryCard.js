@@ -12,7 +12,7 @@ export default function PrimaryCard({
     <Card
       sx={{
         width: "150px",
-        height: "200px",
+        minHeight: "200px",
         border: enrolled
           ? "2px solid var(--primary-color)"
           : "1px solid var(--border-color)",

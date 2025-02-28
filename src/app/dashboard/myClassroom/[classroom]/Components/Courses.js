@@ -45,9 +45,49 @@ export default function Courses() {
       ),
       Language: ["English"],
     },
+    {
+      title: "General Aptitude",
+      thumbnail: defaultThumbnail.src,
+      lessons: "16 Lessons",
+      hours: "48 hours",
+      actionButton: (
+        <Button
+          variant="text"
+          endIcon={<East sx={{ width: "16px", height: "16px" }} />}
+          sx={{
+            textTransform: "none",
+            color: "var(--primary-color)",
+            fontSize: "12px",
+          }}
+        >
+          View
+        </Button>
+      ),
+      Language: ["English"],
+    },
+    {
+      title: "General Aptitude",
+      thumbnail: defaultThumbnail.src,
+      lessons: "16 Lessons",
+      hours: "48 hours",
+      actionButton: (
+        <Button
+          variant="text"
+          endIcon={<East sx={{ width: "16px", height: "16px" }} />}
+          sx={{
+            textTransform: "none",
+            color: "var(--primary-color)",
+            fontSize: "12px",
+          }}
+        >
+          View
+        </Button>
+      ),
+      Language: ["English"],
+    },
   ];
   return (
-    <Stack flexDirection="row" flexWrap="wrap" gap="20px">
+    <Stack flexDirection="row" flexWrap="wrap" sx={{columnGap:{xs:"4px",md:"20px"},rowGap:"10px"}}>
       {courseList.map((item, index) => (
         <CourseCard key={index} {...item} />
       ))}

@@ -1,6 +1,6 @@
 import PrimaryCard from "@/src/Components/PrimaryCard/PrimaryCard";
 import { East } from "@mui/icons-material";
-import { Button, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import gate_cse from "@/public/icons/gate_cse.svg";
 
 export default function PracticeTest() {
@@ -9,7 +9,7 @@ export default function PracticeTest() {
       title: "GATE CSE",
       icon: gate_cse.src,
       subtitle: "Top 5 Questions Quiz",
-      button: (
+      actionButton: (
         <Button
           variant="text"
           endIcon={<East />}
@@ -28,7 +28,7 @@ export default function PracticeTest() {
       title: "Banking",
       icon: gate_cse.src,
       subtitle: "Programming Quiz",
-      button: (
+      actionButton: (
         <Button
           variant="text"
           endIcon={<East />}
@@ -47,7 +47,7 @@ export default function PracticeTest() {
       title: "Placements",
       icon: gate_cse.src,
       subtitle: "Digital Logic Quiz",
-      button: (
+      actionButton: (
         <Button
           variant="text"
           endIcon={<East />}
@@ -66,7 +66,7 @@ export default function PracticeTest() {
       title: "Placements",
       icon: gate_cse.src,
       subtitle: "Mathematics Quiz",
-      button: (
+      actionButton: (
         <Button
           variant="text"
           endIcon={<East />}
@@ -83,16 +83,31 @@ export default function PracticeTest() {
     },
   ];
   return (
-    <Stack flexDirection="row" gap="20px">
-      {practiceTest.map((item, index) => (
-        <PrimaryCard
-          key={index}
-          title={item.title}
-          subtitle={item.subtitle}
-          actionButton={item.button}
-          icon={item.icon}
-        />
-      ))}
-    </Stack>
+     <Box
+          sx={{
+            overflowX: { xs: "auto", md: "" },
+            whiteSpace: "nowrap",
+            scrollbarWidth: "none",
+            "&::-webkit-scrollbar": { display: "none" },
+            width: "100%",
+          }}
+        >
+          <Stack
+            flexDirection="row"
+            flexWrap={{ xs: "wrap" }}
+            gap="10px"
+            sx={{
+              minWidth: { xs: "max-content", md: "100%" },
+            }}
+          >
+            {practiceTest.map((item, index) => (
+              <Box key={index} sx={{ flex: "0 0 auto", width: "150px" }}>
+                <PrimaryCard
+                  {...item}
+                />
+              </Box>
+            ))}
+          </Stack>
+        </Box>
   );
 }

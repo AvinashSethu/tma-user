@@ -30,8 +30,7 @@ export default function InfoCard() {
             alignItems: "center",
           }}
         >
-            <Image src={institute.src} alt="institute" width={34} height={28} />    
-
+          <Image src={institute.src} alt="institute" width={34} height={28} />
         </Stack>
         <Stack>
           <Typography
@@ -57,7 +56,7 @@ export default function InfoCard() {
             alignItems: "center",
           }}
         >
-            <Image src={aGrade.src} alt="institute" width={34} height={26} />
+          <Image src={aGrade.src} alt="institute" width={34} height={26} />
         </Stack>
         <Stack>
           <Typography
@@ -83,7 +82,7 @@ export default function InfoCard() {
             alignItems: "center",
           }}
         >
-            <Image src={book.src} alt="institute" width={34} height={26} />
+          <Image src={book.src} alt="institute" width={34} height={26} />
         </Stack>
         <Stack>
           <Typography
@@ -109,7 +108,7 @@ export default function InfoCard() {
             alignItems: "center",
           }}
         >
-            <Image src={banking.src} alt="banking" width={34} height={26} />
+          <Image src={banking.src} alt="banking" width={34} height={26} />
         </Stack>
         <Stack>
           <Typography

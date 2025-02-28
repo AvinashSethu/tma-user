@@ -7,11 +7,14 @@ import FreeTest from "./Components/FreeTest";
 import PracticeTest from "./Components/PracticeTest";
 import CrackTest from "./Components/CrackTest";
 import InfoCard from "./Components/InfoCard";
+import MobileHeader from "@/src/Components/MobileHeader/MobileHeader";
 
 export default function HomePage() {
   return (
+    <>
+    <MobileHeader />
     <Stack padding="20px" gap="20px">
-      <Stack>
+      <Stack sx={{ display: { xs: "none", md: "block" } }}>
         <Header />
       </Stack>
       <Stack width="100%">
@@ -51,5 +54,6 @@ export default function HomePage() {
       </Stack>
       <CrackTest />
     </Stack>
+    </>
   );
 }
