@@ -9,6 +9,7 @@ import {
   PauseCircle,
   PlayCircle,
 } from "@mui/icons-material";
+import MobileFilter from "@/src/Components/MobileFilter/MobileFilter";
 
 export default function MyCourse() {
   const lessonList = [
@@ -72,19 +73,25 @@ export default function MyCourse() {
       alignItems="center"
     >
       <Stack gap="20px">
+        
         <Header back />
-        <Stack flexDirection="row" gap="30px">
+        <Stack
+          flexDirection="row"
+          gap="30px"
+          sx={{ flexDirection: { xs: "column", lg: "row" } }}
+        >
           <Stack gap="15px">
             <Typography
               sx={{ fontFamily: "Lato", fontSize: "20px", fontWeight: "700" }}
             >
               General Aptitude
             </Typography>
-            <div
+            {/* <div
               style={{
                 position: "relative",
-                width: "800px",
-                paddingTop: "56.25%", // 16:9 
+                width: "100%", 
+                maxWidth: "800px", 
+                paddingTop: "56.25%", 
                 borderRadius: "10px",
                 overflow: "hidden",
               }}
@@ -98,15 +105,28 @@ export default function MyCourse() {
                   left: 0,
                   width: "100%",
                   height: "100%",
-                  objectFit: "cover",
+                  objectFit: "cover", 
+                  maxHeight: "100%", 
                 }}
               />
-            </div>
+            </div> */}
+            <Stack >
+              <img
+                src={defaultThumbnail.src}
+                alt="banner"
+                style={{ borderRadius: "15px" }}
+                
+              />
+            </Stack>
+
             <Typography
               sx={{ fontFamily: "Lato", fontSize: "18px", fontWeight: "500" }}
             >
               About this course
             </Typography>
+            <Stack sx={{display:{xs:"flex",md:"none"}}}>
+      <MobileFilter />
+      </Stack>
             <Typography
               sx={{
                 width: "800px",
@@ -128,10 +148,12 @@ export default function MyCourse() {
               Lorem Ipsum.
             </Typography>
           </Stack>
-          <Stack gap="20px" paddingTop="43px">
+          <Stack gap="20px" alignItems="center">
+            
             <CheckoutCard />
-            <Stack gap="15px">
+            <Stack gap="15px" alignItems="center">
               <Stack
+                width="310px"
                 flexDirection="row"
                 justifyContent="space-between"
                 alignItems="center"
@@ -156,16 +178,16 @@ export default function MyCourse() {
                   1/20
                 </Typography>
               </Stack>
-
-              {lessonList.length > 0
-                ? lessonList.map((item, index) => (
-                    <LessonCard key={index} {...item} />
-                  ))
-                : ""}
             </Stack>
+            {lessonList.length > 0
+              ? lessonList.map((item, index) => (
+                  <LessonCard key={index} {...item} />
+                ))
+              : ""}
           </Stack>
         </Stack>
       </Stack>
+      
     </Stack>
   );
 }

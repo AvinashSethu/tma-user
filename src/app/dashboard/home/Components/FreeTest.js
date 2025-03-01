@@ -1,27 +1,28 @@
 import SecondaryCard from "@/src/Components/SecondaryCard/SecondaryCard";
 import { East } from "@mui/icons-material";
-import { Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import mocks from "@/public/icons/mocks.svg";
+import PrimaryCard from "@/src/Components/PrimaryCard/PrimaryCard";
 
 export default function FreeTest() {
   const goalDetails = [
     {
-      title: "GATE CS Full Mock Test ",
+      title: "GATE CS Mock Test ",
       icon: mocks.src,
-      subtitle: (
-        <Stack flexDirection="row" gap="20px">
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
-            GATE CSE 2024
-          </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
-            120 Questions
-          </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
-            30 Minutes
-          </Typography>
-        </Stack>
-      ),
-      button: (
+      // subtitle: (
+      //   <Stack flexDirection="row" gap="20px">
+      //     <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+      //       GATE CSE 2024
+      //     </Typography>
+      //     <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
+      //       120 Questions
+      //     </Typography>
+      //     <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
+      //       30 Minutes
+      //     </Typography>
+      //   </Stack>
+      // ),
+      actionButton: (
         <Button
           variant="text"
           endIcon={<East />}
@@ -30,29 +31,30 @@ export default function FreeTest() {
             fontFamily: "Lato",
             color: "var(--primary-color)",
             fontSize: "12px",
+            padding: "2px",
           }}
         >
-          Enrolled
+          Start now
         </Button>
       ),
     },
     {
-      title: "Banking Full Mock Test ",
+      title: "Banking Mock Test ",
       icon: mocks.src,
-      subtitle: (
-        <Stack flexDirection="row" gap="20px">
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
-            Banking 2024
-          </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
-            120 Questions
-          </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
-            30 Minutes
-          </Typography>
-        </Stack>
-      ),
-      button: (
+      // subtitle: (
+      //   <Stack flexDirection="row" gap="20px">
+      //     <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+      //       Banking 2024
+      //     </Typography>
+      //     <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
+      //       120 Questions
+      //     </Typography>
+      //     <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
+      //       30 Minutes
+      //     </Typography>
+      //   </Stack>
+      // ),
+      actionButton: (
         <Button
           variant="text"
           endIcon={<East />}
@@ -61,29 +63,30 @@ export default function FreeTest() {
             fontFamily: "Lato",
             color: "var(--primary-color)",
             fontSize: "12px",
+            padding: "2px",
           }}
         >
-          Enrolled
+          Start now
         </Button>
       ),
     },
     {
-      title: "Banking Full Mock Test ",
+      title: "Banking Mock Test ",
       icon: mocks.src,
-      subtitle: (
-        <Stack flexDirection="row" gap="20px">
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
-            Banking 2024
-          </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
-            120 Questions
-          </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
-            30 Minutes
-          </Typography>
-        </Stack>
-      ),
-      button: (
+      // subtitle: (
+      //   <Stack flexDirection="row" gap="20px">
+      //     <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
+      //       Banking 2024
+      //     </Typography>
+      //     <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
+      //       120 Questions
+      //     </Typography>
+      //     <Typography sx={{ fontFamily: "Lato", fontSize: "12px",display:{xs:"none",md:"block"} }}>
+      //       30 Minutes
+      //     </Typography>
+      //   </Stack>
+      // ),
+      actionButton: (
         <Button
           variant="text"
           endIcon={<East />}
@@ -92,31 +95,29 @@ export default function FreeTest() {
             fontFamily: "Lato",
             color: "var(--primary-color)",
             fontSize: "12px",
+            padding: "2px",
           }}
         >
-          Enrolled
+          Start now
         </Button>
       ),
     },
   ];
   return (
-    <Stack
-      justifyContent="space-between"
-      gap="15px"
-      flexDirection="row"
-      flexWrap="wrap"
-      width="100%"
-    >
+    <Box
+    sx={{
+      overflowX: { xs: "auto", md: "" },
+      whiteSpace: "nowrap",
+      scrollbarWidth: "none",
+      "&::-webkit-scrollbar": { display: "none" },
+      width: "100%",
+    }}
+  >
+    <Stack gap="15px" flexDirection="row" flexWrap="wrap" width="100%">
       {goalDetails.map((item, index) => (
-        <SecondaryCard
-          cardWidth="49%"
-          key={index}
-          title={item.title}
-          subTitle={item.subtitle}
-          button={item.button}
-          icon={item.icon}
-        />
+        <PrimaryCard key={index} {...item} />
       ))}
     </Stack>
+    </Box>
   );
 }

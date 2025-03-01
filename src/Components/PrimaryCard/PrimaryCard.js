@@ -17,11 +17,12 @@ export default function PrimaryCard({
           ? "2px solid var(--primary-color)"
           : "1px solid var(--border-color)",
         borderColor: "var(--border-color)",
-        paddingTop: "20px",
+        padding: "20px 10px 10px 10px",
         borderRadius: "10px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        textAlign: "center",
       }}
       elevation={0}
     >
@@ -39,7 +40,11 @@ export default function PrimaryCard({
           <Image src={icon} alt="icon" width={26} height={26} />
         </Stack>
         <Typography
-          sx={{ fontFamily: "Lato", fontSize: "14px", fontWeight: "700" }}
+          sx={{
+            fontFamily: "Lato",
+            fontSize: "14px",
+            fontWeight: "700",
+          }}
         >
           {title}
         </Typography>
@@ -56,9 +61,7 @@ export default function PrimaryCard({
           </Typography>
         )}
       </Stack>
-      <Stack paddingBottom="10px" sx={{ marginTop: "auto" }}>
-        {actionButton}
-      </Stack>
+      <Stack sx={{ marginTop: "auto" }}>{actionButton}</Stack>
     </Card>
   );
 }

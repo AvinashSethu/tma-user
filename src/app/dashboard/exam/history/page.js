@@ -60,7 +60,10 @@ export default function History() {
   ];
   return (
     <Stack padding="20px" gap="20px">
-      <Header />
+
+      <Stack sx={{ display: { xs: "none", md: "block" } }}>
+              <Header />
+            </Stack>
       <Stack
         sx={{
           border: "1px solid var(--border-color)",

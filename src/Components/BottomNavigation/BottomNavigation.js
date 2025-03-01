@@ -5,7 +5,7 @@ import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import home from "@/public/icons/home_icon.svg";
 import exam from "@/public/icons/exam_icon.svg";
 import courses from "@/public/icons/courses_icon.svg";
-import classroom from "@/public/icons/classroom_icon.svg";
+import myLearning from "@/public/icons/myLearning.svg";
 import Image from "next/image";
 
 export default function MobileBottomNav() {
@@ -18,7 +18,7 @@ export default function MobileBottomNav() {
       if (newValue === 0) router.push("/dashboard/home");
       if (newValue === 1) router.push("/dashboard");
       if (newValue === 2) router.push("/dashboard/exam/exams");
-      if (newValue === 3) router.push("/dashboard/myClassroom");
+      if (newValue === 3) router.push("/dashboard/courses");
       if (newValue === 4) router.push("/dashboard/profile");
     }
   };
@@ -61,9 +61,9 @@ export default function MobileBottomNav() {
         label="My Learning"
         icon={
           <Image
-            src={courses.src}
+            src={myLearning.src}
             alt="Home"
-            width={18}
+            width={20}
             height={20}
             style={{ opacity: value === 1 ? 1 : 0.6 }}
           />
@@ -98,10 +98,10 @@ export default function MobileBottomNav() {
         }}
       />
       <BottomNavigationAction
-        label="Classroom"
+        label="Courses"
         icon={
           <Image
-            src={classroom.src}
+            src={courses.src}
             alt="Home"
             width={18}
             height={20}

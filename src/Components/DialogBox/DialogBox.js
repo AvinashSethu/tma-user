@@ -38,13 +38,13 @@ export default function DialogBox({
           fontFamily: "Lato",
           fontSize: "20px",
           fontWeight: "700",
-          paddingBottom: "0px",
+          padding: {xs:"10px",md:"20px"},
         }}
       >
         {title}
         {icon}
       </DialogTitle>
-      <DialogContent sx={{ padding: "0px" }}>{children}</DialogContent>
+      <DialogContent sx={{ padding: 0, }}>{children}</DialogContent>
       <DialogActions sx={{ justifyContent: "center" }}>
         <Stack>{actionButton}</Stack>
       </DialogActions>

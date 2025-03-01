@@ -12,8 +12,8 @@ export default function LessonCard({
       flexDirection="row"
       alignItems="center"
       sx={{
-        width: "320px",
-        maxWidth: "340px",
+        width: "340px",
+        maxWidth: "350px",
         maxHeight: "70px",
         height: "70px",
         padding: "10px",

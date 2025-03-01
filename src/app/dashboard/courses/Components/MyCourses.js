@@ -53,7 +53,11 @@ export default function MyCourses() {
     },
   ];
   return (
-    <Stack flexDirection="row" flexWrap="wrap" rowGap="20px" columnGap="10px">
+    <Stack
+      flexDirection="row"
+      flexWrap="wrap"
+      sx={{ columnGap: { xs: "4px", md: "20px" }, rowGap: "10px" }}
+    >
       {courseList.length > 0
         ? courseList.map((item, index) => <CourseCard key={index} {...item} />)
         : "No Courses"}

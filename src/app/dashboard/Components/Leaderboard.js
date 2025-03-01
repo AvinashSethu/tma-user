@@ -12,26 +12,38 @@ export default function Leaderboard() {
     { sNo: 5, name: "Mira", points: "140 points" },
   ];
   return (
-    <Stack
-      sx={{
-        border: "1px solid var(--border-color)",
-        borderRadius: "10px",
-        backgroundColor: "var(--white)",
-        width: "350px",
-        minHeight: "370px",
-        padding: "18px",
-        gap: "10px",
-      }}
-    >
-      {leaderboardList.map((item, index) => (
-        <LeaderboardCard key={index} {...item} />
-      ))}
+    <Stack sx={{ display: { xs: "none", md: "block" } }}>
       <Typography
-        sx={{ fontFamily: "Lato", fontSize: "16px", fontWeight: "700" }}
+        sx={{
+          fontFamily: "Lato",
+          fontSize: "20px",
+          fontWeight: "700",
+          marginBottom: "20px",
+        }}
       >
-        Your Rank
+        LeaderBoard
       </Typography>
-      <LeaderboardCard sNo={1} name="Mira" points="200 points" />
+      <Stack
+        sx={{
+          border: "1px solid var(--border-color)",
+          borderRadius: "10px",
+          backgroundColor: "var(--white)",
+          width: "350px",
+          minHeight: "370px",
+          padding: "18px",
+          gap: "10px",
+        }}
+      >
+        {leaderboardList.map((item, index) => (
+          <LeaderboardCard key={index} {...item} />
+        ))}
+        <Typography
+          sx={{ fontFamily: "Lato", fontSize: "16px", fontWeight: "700" }}
+        >
+          Your Rank
+        </Typography>
+        <LeaderboardCard sNo={1} name="Mira" points="200 points" />
+      </Stack>
     </Stack>
   );
 }

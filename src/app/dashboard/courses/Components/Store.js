@@ -135,8 +135,13 @@ export default function Store() {
       ),
     },
   ];
+
   return (
-    <Stack flexDirection="row" flexWrap="wrap" rowGap="20px" columnGap="10px">
+    <Stack
+      flexDirection="row"
+      flexWrap="wrap"
+      sx={{ columnGap: { xs: "4px", md: "20px" }, rowGap: "10px" }}
+    >
       {storeList.length > 0
         ? storeList.map((item, index) => <CourseCard key={index} {...item} />)
         : "No Courses"}

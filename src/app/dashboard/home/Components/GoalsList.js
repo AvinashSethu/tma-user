@@ -22,6 +22,7 @@ export default function GoalsList() {
             fontFamily: "Lato",
             color: "var(--primary-color)",
             fontSize: "12px",
+            padding: "2px",
           }}
         >
           Enrolled
@@ -41,6 +42,7 @@ export default function GoalsList() {
             fontFamily: "Lato",
             color: "var(--primary-color)",
             fontSize: "12px",
+            padding: "2px",
           }}
         >
           Enrolled
@@ -59,6 +61,7 @@ export default function GoalsList() {
             fontFamily: "Lato",
             color: "var(--primary-color)",
             fontSize: "12px",
+            padding: "2px",
           }}
         >
           View
@@ -77,6 +80,7 @@ export default function GoalsList() {
             fontFamily: "Lato",
             color: "var(--primary-color)",
             fontSize: "12px",
+            padding: "2px",
           }}
         >
           View
@@ -95,6 +99,7 @@ export default function GoalsList() {
             fontFamily: "Lato",
             color: "var(--primary-color)",
             fontSize: "12px",
+            padding: "2px",
           }}
         >
           View
