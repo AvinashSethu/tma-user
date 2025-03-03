@@ -27,6 +27,7 @@ export default function MasterLogo({ isSideNavOpen }) {
             letterSpacing: "0.3px",
             color: "var(--primary-color)",
             whiteSpace: "nowrap",
+            display:{xs:"none",md:"block"},
           }}
         >
           {process.env.NEXT_PUBLIC_COMPANY_NAME}

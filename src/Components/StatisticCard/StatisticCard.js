@@ -17,7 +17,7 @@ export default function StatisticCard({ icon, title, count }) {
       }}
       elevation={0}
     >
-      <Stack flexDirection="row" gap="10px" alignItems="center">
+      <Stack flexDirection="row" gap="10px"  minHeight="35px">
         <Stack
           sx={{
             backgroundColor: "var(--sec-color-acc-1)",

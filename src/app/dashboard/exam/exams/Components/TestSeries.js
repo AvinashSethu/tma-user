@@ -2,8 +2,10 @@ import PrimaryCard from "@/src/Components/PrimaryCard/PrimaryCard";
 import { Button, Stack } from "@mui/material";
 import mocks from "@/public/icons/mocks.svg";
 import { East } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
 
 export default function TestSeries() {
+  const router = useRouter();
   const seriesList = [
     {
       icon: mocks.src,
@@ -13,6 +15,7 @@ export default function TestSeries() {
         <Button
           variant="text"
           endIcon={<East />}
+          onClickCapture={() => router.push("/exam/1/instruction")}
           sx={{
             textTransform: "none",
             fontFamily: "Lato",

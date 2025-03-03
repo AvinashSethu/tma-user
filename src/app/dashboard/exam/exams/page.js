@@ -8,8 +8,8 @@ export default function Exams() {
   return (
     <Stack>
       <Stack
+        spacing={2}
         padding="20px"
-        gap="20px"
         sx={{ display: { xs: "none", md: "block" } }}
       >
         <Header />
@@ -22,6 +22,7 @@ export default function Exams() {
           <TestSeries />
         </Stack>
       </Stack>
+
       <ResponsiveTestSeries />
     </Stack>
   );

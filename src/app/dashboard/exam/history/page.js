@@ -1,10 +1,13 @@
+"use client";
 import SearchBox from "@/src/Components/SearchBox/SearchBox";
 import SecondaryCard from "@/src/Components/SecondaryCard/SecondaryCard";
 import { Button, Stack, Typography } from "@mui/material";
 import mocks from "@/public/icons/mocks.svg";
 import Header from "@/src/Components/Header/Header";
+import { useRouter } from "next/navigation";
 
 export default function History() {
+  const router = useRouter();
   const historyList = [
     {
       title: "Placements (Institute)",
@@ -88,6 +91,7 @@ export default function History() {
             <SearchBox />
             <Button
               variant="contained"
+              onClick={() => {router.push("/dashboard/exam/results")}}
               sx={{
                 textTransform: "none",
                 backgroundColor: "var(--primary-color)",
