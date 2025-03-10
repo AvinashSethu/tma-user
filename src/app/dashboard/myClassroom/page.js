@@ -14,6 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import group from "@/public/icons/group.svg";
+import Image from "next/image";
 
 export default function MyClassroom() {
   const router = useRouter();
@@ -23,12 +24,12 @@ export default function MyClassroom() {
   const classroomList = [
     {
       title: "ECE 3rd year",
-      icon: group.src,
+      icon:<Image src={ group.src} alt="icon" width={26} height={26} />,
       button: <MoreVert />,
     },
     {
       title: "Placement PSREC",
-      icon: group.src,
+      icon: <Image src={ group.src} alt="icon" width={26} height={26} />,
       button: <MoreVert />,
     },
   ];

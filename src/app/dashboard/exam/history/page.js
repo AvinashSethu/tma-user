@@ -63,10 +63,9 @@ export default function History() {
   ];
   return (
     <Stack padding="20px" gap="20px">
-
       <Stack sx={{ display: { xs: "none", md: "block" } }}>
-              <Header />
-            </Stack>
+        <Header />
+      </Stack>
       <Stack
         sx={{
           border: "1px solid var(--border-color)",
@@ -91,7 +90,9 @@ export default function History() {
             <SearchBox />
             <Button
               variant="contained"
-              onClick={() => {router.push("/dashboard/exam/results")}}
+              onClick={() => {
+                router.push("/dashboard/exam/results");
+              }}
               sx={{
                 textTransform: "none",
                 backgroundColor: "var(--primary-color)",

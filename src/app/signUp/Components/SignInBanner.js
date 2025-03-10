@@ -15,18 +15,19 @@ export default function SignInBanner() {
       <Stack
         justifyContent="center"
         alignItems="center"
-        sx={{ height: "100%" }}
+        sx={{ height: "100vh" }}
       >
         <Image
           src={"/images/SignInBanner1.svg"}
           alt="banner"
-          width={400}
+          width={450}
           height={400}
+          // style={{ marginTop: "auto" }}
         />
         <Image
           src="images/SignInBanner2.svg"
           alt="banner"
-          width={800}
+          width={600}
           height={330}
           style={{ marginTop: "auto" }}
         />

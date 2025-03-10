@@ -22,9 +22,16 @@ export default function MobileFilter() {
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
 
-  const handleClearAll = () => {
+  const handleClearAll = () =>
     setFilters({ goals: "", exams: "", dateRange: "" });
-  };
+  const handleFilterChange = (key, value) =>
+    setFilters((prev) => ({ ...prev, [key]: value }));
+
+  const filterOptions = [
+    { label: "Sort by goals", key: "goals" },
+    { label: "Sort by exams", key: "exams" },
+    { label: "Select date range", key: "dateRange" },
+  ];
 
   return (
     <>
@@ -34,9 +41,14 @@ export default function MobileFilter() {
           backgroundColor: "white",
           boxShadow: 2,
           borderRadius: "10px",
+          width: { xs: "36px", sm: "40px" },
+          height: { xs: "36px", sm: "40px" },
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <FilterListIcon />
+        <FilterListIcon fontSize="small" />
       </IconButton>
 
       <Drawer
@@ -48,42 +60,48 @@ export default function MobileFilter() {
             borderRadius: "15px 15px 0 0",
             padding: "20px",
             backgroundColor: "var(--white)",
-            marginBottom: "60px",
+            maxWidth: "500px",
+            margin: "auto",
+            width: "100%",
           },
         }}
       >
-        <Stack gap={2}>
-          <Typography variant="h6" fontWeight="bold">
+        <Stack spacing={2}>
+          <Typography variant="h6" fontWeight="bold" textAlign="center">
             Filters
           </Typography>
-          {[
-            { label: "Sort by goals", key: "goals" },
-            { label: "Sort by exams", key: "exams" },
-            { label: "Select date range", key: "dateRange" },
-          ].map(({ label, key }) => (
+
+          {filterOptions.map(({ label, key }) => (
             <Select
               key={key}
               value={filters[key]}
               onChange={(e) => handleFilterChange(key, e.target.value)}
               displayEmpty
               fullWidth
-              sx={{ backgroundColor: "white", borderRadius: "8px" }}
+              sx={{
+                backgroundColor: "white",
+                borderRadius: "8px",
+                fontSize: { xs: "14px", sm: "16px" },
+                padding: { xs: "8px", sm: "10px" },
+              }}
             >
               <MenuItem value="">{label}</MenuItem>
               <MenuItem value="option1">Option 1</MenuItem>
               <MenuItem value="option2">Option 2</MenuItem>
             </Select>
           ))}
-          <Stack flexDirection="row" justifyContent="space-between" mt={2}>
+
+          <Stack flexDirection="row" gap={2} justifyContent="center" mt={2}>
             <Button
               variant="outlined"
               onClick={handleClearAll}
               sx={{
-                borderRadius: "4px",
-                padding: "10px 20px",
-                width: "160px",
+                borderRadius: "8px",
+                padding: { xs: "8px 16px", sm: "10px 20px" },
+                flexGrow: 1,
                 borderColor: "var(--primary-color)",
                 color: "var(--primary-color)",
+                fontSize: { xs: "12px", sm: "14px" },
               }}
             >
               Clear all
@@ -92,10 +110,11 @@ export default function MobileFilter() {
               variant="contained"
               onClick={closeDrawer}
               sx={{
-                borderRadius: "4px",
-                padding: "10px 20px",
+                borderRadius: "8px",
+                padding: { xs: "8px 16px", sm: "10px 20px" },
+                flexGrow: 1,
                 backgroundColor: "var(--primary-color)",
-                width: "160px",
+                fontSize: { xs: "12px", sm: "14px" },
               }}
               disableElevation
             >

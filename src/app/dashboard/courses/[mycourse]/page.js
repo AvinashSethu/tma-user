@@ -1,14 +1,10 @@
+"use client";
 import Header from "@/src/Components/Header/Header";
-import { CircularProgress, duration, Stack, Typography } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 import defaultThumbnail from "@/public/images/defaultThumbnail.svg";
 import LessonCard from "@/src/Components/LessonCard.js/LessonCard";
 import CheckoutCard from "@/src/Components/CheckoutCard.js/CheckoutCard";
-import {
-  CheckCircle,
-  Lock,
-  PauseCircle,
-  PlayCircle,
-} from "@mui/icons-material";
+import { CheckCircle, Lock, PauseCircle, PlayCircle } from "@mui/icons-material";
 import MobileFilter from "@/src/Components/MobileFilter/MobileFilter";
 
 export default function MyCourse() {
@@ -33,161 +29,98 @@ export default function MyCourse() {
       ),
       now: true,
     },
-    {
+    ...Array(5).fill({
       LessonName: "Linear Integration",
       duration: "20 mins",
       iconStart: <PlayCircle sx={{ color: "var(--primary-color)" }} />,
       iconEnd: <Lock sx={{ color: "var(--primary-color)" }} />,
-    },
-    {
-      LessonName: "Linear Integration",
-      duration: "20 mins",
-      iconStart: <PlayCircle sx={{ color: "var(--primary-color)" }} />,
-      iconEnd: <Lock sx={{ color: "var(--primary-color)" }} />,
-    },
-    {
-      LessonName: "Linear Integration",
-      duration: "20 mins",
-      iconStart: <PlayCircle sx={{ color: "var(--primary-color)" }} />,
-      iconEnd: <Lock sx={{ color: "var(--primary-color)" }} />,
-    },
-    {
-      LessonName: "Linear Integration",
-      duration: "20 mins",
-      iconStart: <PlayCircle sx={{ color: "var(--primary-color)" }} />,
-      iconEnd: <Lock sx={{ color: "var(--primary-color)" }} />,
-    },
-    {
-      LessonName: "Linear Integration",
-      duration: "20 mins",
-      iconStart: <PlayCircle sx={{ color: "var(--primary-color)" }} />,
-      iconEnd: <Lock sx={{ color: "var(--primary-color)" }} />,
-    },
+    }),
   ];
 
   return (
-    <Stack
-      padding="20px"
-      gap="20px"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack gap="20px">
-        
+    <Stack padding={{ xs: "15px", sm: "20px" }} gap="20px" alignItems="center">
+      <Stack gap="20px" width="100%" maxWidth="1200px">
         <Header back />
+
+        {/* Main Layout */}
         <Stack
-          flexDirection="row"
-          gap="30px"
-          sx={{ flexDirection: { xs: "column", lg: "row" } }}
+          direction={{ xs: "column", lg: "row" }}
+          gap={{ xs: "20px", lg: "30px" }}
+          justifyContent="center"
+          alignItems="flex-start"
         >
-          <Stack gap="15px">
-            <Typography
-              sx={{ fontFamily: "Lato", fontSize: "20px", fontWeight: "700" }}
-            >
+          {/* Course Details Section */}
+          <Stack gap="15px" flex={1} width="100%">
+            <Typography sx={{ typography: { xs: "h6", sm: "h5" }, fontWeight: "700" }}>
               General Aptitude
             </Typography>
-            {/* <div
-              style={{
-                position: "relative",
-                width: "100%", 
-                maxWidth: "800px", 
-                paddingTop: "56.25%", 
-                borderRadius: "10px",
-                overflow: "hidden",
-              }}
-            >
+
+            {/* Course Thumbnail */}
+            <Stack>
               <img
                 src={defaultThumbnail.src}
-                alt="thumbnail"
+                alt="Course Thumbnail"
                 style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
+                  borderRadius: "15px",
                   width: "100%",
-                  height: "100%",
-                  objectFit: "cover", 
-                  maxHeight: "100%", 
+                  maxWidth: "800px",
+                  height: "auto",
                 }}
-              />
-            </div> */}
-            <Stack >
-              <img
-                src={defaultThumbnail.src}
-                alt="banner"
-                style={{ borderRadius: "15px" }}
-                
               />
             </Stack>
 
-            <Typography
-              sx={{ fontFamily: "Lato", fontSize: "18px", fontWeight: "500" }}
-            >
+            <Typography sx={{ typography: { xs: "subtitle1", sm: "h6" }, fontWeight: "500" }}>
               About this course
             </Typography>
-            <Stack sx={{display:{xs:"flex",md:"none"}}}>
-      <MobileFilter />
-      </Stack>
+
+            {/* Mobile Filter - Visible Only on Small Screens */}
+            <Stack display={{ xs: "flex", md: "none" }}>
+              <MobileFilter />
+            </Stack>
+
             <Typography
               sx={{
-                width: "800px",
-                fontFamily: "Lato",
-                fontSize: "16px",
+                fontSize: { xs: "14px", sm: "16px" },
                 color: "var(--text3)",
-                lineHeight: "29px",
+                lineHeight: "1.7",
+                maxWidth: "800px",
+                textAlign: "justify",
               }}
             >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry`s standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+              It has been the industry’s standard dummy text ever since the 1500s, when 
+              an unknown printer took a galley of type and scrambled it to make a type specimen book.
             </Typography>
           </Stack>
-          <Stack gap="20px" alignItems="center">
-            
+
+          {/* Sidebar: Checkout & Lessons */}
+          <Stack gap="20px" alignItems="center" flex={{ xs: "auto", lg: 0.6 }} width="100%">
             <CheckoutCard />
-            <Stack gap="15px" alignItems="center">
+
+            {/* Lectures Section */}
+            <Stack width="100%" maxWidth="310px" gap="15px" alignItems="center">
               <Stack
-                width="310px"
+                width="100%"
                 flexDirection="row"
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Typography
-                  sx={{
-                    fontFamily: "Lato",
-                    fontSize: "20px",
-                    fontWeight: "700",
-                  }}
-                >
+                <Typography sx={{ fontSize: { xs: "18px", sm: "20px" }, fontWeight: "700" }}>
                   Lectures
                 </Typography>
-                <Typography
-                  sx={{
-                    fontFamily: "Lato",
-                    fontSize: "16px",
-                    color: "var(--text3)",
-                    paddingRight: "5px",
-                  }}
-                >
+                <Typography sx={{ fontSize: "16px", color: "var(--text3)" }}>
                   1/20
                 </Typography>
               </Stack>
+
+              {/* Lesson List */}
+              {lessonList.map((item, index) => (
+                <LessonCard key={index} {...item} />
+              ))}
             </Stack>
-            {lessonList.length > 0
-              ? lessonList.map((item, index) => (
-                  <LessonCard key={index} {...item} />
-                ))
-              : ""}
           </Stack>
         </Stack>
       </Stack>
-      
     </Stack>
   );
 }
