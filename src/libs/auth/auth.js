@@ -1,0 +1,302 @@
+"server only";
+import { dynamoDB } from "@/src/utils/awsAgent";
+import {
+  PutCommand,
+  QueryCommand,
+  DeleteCommand,
+  UpdateCommand,
+} from "@aws-sdk/lib-dynamodb";
+import {
+  hashPassword,
+  generateOTP,
+  generateToken,
+  verifyToken,
+} from "@/src/utils/crypto";
+import { randomUUID } from "crypto";
+import { sendOTPToMail } from "@/src/utils/mail";
+
+export async function getUserByEmail(email) {
+  const params = {
+    TableName: `${process.env.AWS_DB_NAME}users`,
+    IndexName: "GSI1-index", // Ensure this matches your GSI name
+    KeyConditionExpression: "#gsi1PKey = :email AND #gsi1SKey = :email", // Use expression attribute names
+    ExpressionAttributeNames: {
+      "#gsi1PKey": "GSI1-pKey", // Map placeholder to actual attribute name
+      "#gsi1SKey": "GSI1-sKey", // Map placeholder to actual attribute name
+    },
+    ExpressionAttributeValues: {
+      ":email": `USER#${email}`, // Match the GSI key structure
+    },
+  };
+
+  try {
+    const result = await dynamoDB.send(new QueryCommand(params));
+    return result.Items?.length ? result.Items[0] : null;
+  } catch (error) {
+    console.error("Error fetching user by email:", error);
+    throw new Error("Failed to retrieve user");
+  }
+}
+
+export async function updateUserEmailVerified(email) {
+  const user = await getUserByEmail(email);
+  if (!user) {
+    throw new Error("User not found");
+  }
+  try {
+    await dynamoDB.send(
+      new UpdateCommand({
+        TableName: `${process.env.AWS_DB_NAME}users`,
+        Key: { pKey: user.pKey, sKey: user.sKey },
+        UpdateExpression: "set emailVerified = :emailVerified",
+        ExpressionAttributeValues: { ":emailVerified": true },
+      })
+    );
+  } catch (error) {
+    console.error("Error updating user email verified:", error);
+    throw new Error("Failed to update user email verified");
+  }
+}
+
+export async function createUser({ email, name, password }) {
+  const existingUser = await getUserByEmail(email);
+  //check if user is already verified
+  if (existingUser?.emailVerified) {
+    throw new Error("A user with that email already exists");
+  }
+  if (existingUser) {
+    await dynamoDB.send(
+      new DeleteCommand({
+        TableName: `${process.env.AWS_DB_NAME}users`,
+        Key: {
+          pKey: existingUser.pKey,
+          sKey: existingUser.sKey,
+        },
+      })
+    );
+  }
+
+  const userID = randomUUID();
+  const hashedPassword = await hashPassword(password);
+  const params = {
+    TableName: `${process.env.AWS_DB_NAME}users`,
+    Item: {
+      pKey: `USER#${userID}`,
+      sKey: `USER#${userID}`,
+      email,
+      name: name || "",
+      password: hashedPassword,
+      "GSI1-pKey": `USER#${email}`,
+      "GSI1-sKey": `USER#${email}`,
+      emailVerified: false, // or you might store a timestamp once verified
+      role: "user", // user, admin, superadmin
+      status: "active", // active, inactive, deleted
+      otp: {
+        otp: generateOTP(),
+        expiresAt: Date.now() + 1000 * 60 * 5, // 5 minutes from now
+        attemptsRemaining: 3,
+      },
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    },
+    ConditionExpression: "attribute_not_exists(email)",
+  };
+
+  try {
+    await dynamoDB.send(new PutCommand(params));
+    await sendOTPToMail({ to: email, otp: params.Item.otp.otp });
+    return {
+      success: true,
+      message: "OTP sent to email",
+    };
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to create user");
+  }
+}
+
+export async function resendOTP({ email }) {
+  const user = await getUserByEmail(email);
+  if (!user) {
+    throw new Error("User not found");
+  }
+  if (user.otp.expiresAt > Date.now()) {
+    await sendOTPToMail({ to: email, otp: user.otp.otp });
+    return {
+      success: true,
+      message: "OTP sent",
+    };
+  }
+  user.otp.otp = generateOTP();
+  user.otp.expiresAt = Date.now() + 1000 * 60 * 5; // 5 minutes from now
+  user.otp.attemptsRemaining = 3;
+
+  try {
+    await dynamoDB.send(
+      new UpdateCommand({
+        TableName: `${process.env.AWS_DB_NAME}users`,
+        Key: { pKey: user.pKey, sKey: user.sKey },
+        UpdateExpression: "set otp = :otp",
+        ExpressionAttributeValues: { ":otp": user.otp },
+      })
+    );
+    await sendOTPToMail({ to: email, otp: user.otp.otp });
+    return {
+      success: true,
+      message: "OTP sent",
+    };
+  } catch (error) {
+    console.error("Error sending OTP:", error);
+    throw new Error("Failed to send OTP");
+  }
+}
+
+export async function verifyOTP({ email, otp }) {
+  const user = await getUserByEmail(email);
+  if (!user) {
+    throw new Error("User not found");
+  }
+  //reduce OTP attempts
+  if (user.otp.attemptsRemaining > 0) {
+    user.otp.attemptsRemaining--;
+    await dynamoDB.send(
+      new UpdateCommand({
+        TableName: `${process.env.AWS_DB_NAME}users`,
+        Key: { pKey: user.pKey, sKey: user.sKey },
+        UpdateExpression: "set otp.attemptsRemaining = :attemptsRemaining",
+        ExpressionAttributeValues: {
+          ":attemptsRemaining": user.otp.attemptsRemaining,
+        },
+      })
+    );
+  } else {
+    throw new Error("OTP attempts exceeded");
+  }
+  //check if OTP is correct
+  if (user.otp.otp !== otp) {
+    throw new Error("Invalid OTP");
+  }
+  //check if OTP is expired
+  if (user.otp.expiresAt < Date.now()) {
+    throw new Error("OTP expired");
+  }
+
+  await dynamoDB.send(
+    new UpdateCommand({
+      TableName: `${process.env.AWS_DB_NAME}users`,
+      Key: { pKey: user.pKey, sKey: user.sKey },
+      UpdateExpression: "set emailVerified = :emailVerified",
+      ExpressionAttributeValues: { ":emailVerified": true },
+    })
+  );
+  return {
+    success: true,
+    message: "Email verified",
+  };
+}
+
+export async function forgotPassword({ email }) {
+  const user = await getUserByEmail(email);
+  if (!user) {
+    throw new Error("User not found");
+  }
+  user.otp.otp = generateOTP();
+  user.otp.expiresAt = Date.now() + 1000 * 60 * 5; // 5 minutes from now
+  user.otp.attemptsRemaining = 3;
+  try {
+    await dynamoDB.send(
+      new UpdateCommand({
+        TableName: `${process.env.AWS_DB_NAME}users`,
+        Key: { pKey: user.pKey, sKey: user.sKey },
+        UpdateExpression: "set otp = :otp",
+        ExpressionAttributeValues: { ":otp": user.otp },
+      })
+    );
+    await sendOTPToMail({ to: email, otp: user.otp.otp });
+    return {
+      success: true,
+      message: "OTP sent",
+    };
+  } catch (error) {
+    console.error("Error sending OTP:", error);
+    throw new Error("Failed to send OTP");
+  }
+}
+
+export async function verifyOTPForPasswordReset({ email, otp }) {
+  const user = await getUserByEmail(email);
+  if (!user) {
+    throw new Error("User not found");
+  }
+  //reduce OTP attempts
+  if (user.otp.attemptsRemaining > 0) {
+    user.otp.attemptsRemaining--;
+    await dynamoDB.send(
+      new UpdateCommand({
+        TableName: `${process.env.AWS_DB_NAME}users`,
+        Key: { pKey: user.pKey, sKey: user.sKey },
+        UpdateExpression: "set otp.attemptsRemaining = :attemptsRemaining",
+        ExpressionAttributeValues: {
+          ":attemptsRemaining": user.otp.attemptsRemaining,
+        },
+      })
+    );
+  } else {
+    throw new Error("OTP attempts exceeded");
+  }
+  //check if OTP is correct
+  if (user.otp.otp !== otp) {
+    throw new Error("Invalid OTP");
+  }
+  //check if OTP is expired
+  if (user.otp.expiresAt < Date.now()) {
+    throw new Error("OTP expired");
+  }
+
+  return {
+    success: true,
+    message: "OTP verified",
+    data: {
+      token: generateToken({ id: user.pKey.split("#")[1], email }),
+    },
+  };
+}
+
+export async function updateUserPassword({ password, token }) {
+  const { email, id } = verifyToken(token);
+  const user = await getUserByEmail(email);
+  if (!user) {
+    throw new Error("User not found");
+  }
+  if (!user.emailVerified) {
+    throw new Error("Email not verified");
+  }
+  try {
+    if (id !== user.pKey.split("#")[1]) {
+      throw new Error("Invalid token");
+    }
+  } catch (error) {
+    throw new Error("Invalid token");
+  }
+  const hashedPassword = await hashPassword(password);
+  if (user.password === hashedPassword) {
+    throw new Error("New password cannot be the same as the old password");
+  }
+  try {
+    await dynamoDB.send(
+      new UpdateCommand({
+        TableName: `${process.env.AWS_DB_NAME}users`,
+        Key: { pKey: user.pKey, sKey: user.sKey },
+        UpdateExpression: "set password = :password",
+        ExpressionAttributeValues: { ":password": hashedPassword },
+      })
+    );
+    return {
+      success: true,
+      message: "Password updated",
+    };
+  } catch (error) {
+    console.error("Error updating user password:", error);
+    throw new Error("Failed to update user password");
+  }
+}

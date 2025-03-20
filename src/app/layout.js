@@ -1,4 +1,6 @@
 "use client";
+import { getSession } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import { Geist, Geist_Mono, Lato } from "next/font/google";
 import "./globals.css";
 import { SnackbarProvider } from "notistack";
@@ -61,10 +63,13 @@ const APP_DESCRIPTION = "The Masters Academy Learning Platform";
 // };
 
 export default function RootLayout({ children }) {
+  const session = getSession();
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <SnackbarProvider maxSnack={2}>{children}</SnackbarProvider>
+        <SessionProvider>
+          <SnackbarProvider maxSnack={2}>{children}</SnackbarProvider>
+        </SessionProvider>
       </body>
     </html>
   );

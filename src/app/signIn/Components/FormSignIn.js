@@ -1,10 +1,57 @@
 "use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn, useSession, signOut } from "next-auth/react";
 import StyledTextField from "@/src/Components/StyledTextField/StyledTextField";
 import { Button, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
 
 export default function FormSignIn({ onNext }) {
   const router = useRouter();
+  const { data: session, status } = useSession();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleCredentialsLogin = async (e) => {
+    e.preventDefault();
+    setErrorMsg("");
+    const res = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+    if (res.error) {
+      setErrorMsg(res.error);
+    } else {
+      router.push("/dashboard");
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    // Initiates the Google OAuth flow
+    await signIn("google");
+  };
+
+  if (status === "loading") {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (session) {
+    return (
+      <Stack alignItems="center" spacing={2}>
+        <Typography>
+          Already logged in as {session.user.name || session.user.email}
+        </Typography>
+        <Button variant="contained" onClick={() => router.push("/dashboard")}>
+          Go to Dashboard
+        </Button>
+        <Button variant="contained" onClick={() => signOut()}>
+          Sign Out
+        </Button>
+      </Stack>
+    );
+  }
+
   return (
     <Stack
       sx={{
@@ -17,7 +64,11 @@ export default function FormSignIn({ onNext }) {
       <Stack gap={1}>
         <Stack flexDirection="row" justifyContent="space-between">
           <Typography
-            sx={{ fontSize: "Lato", fontSize: "16px", fontWeight: "500" }}
+            sx={{
+              fontFamily: "Lato",
+              fontSize: "16px",
+              fontWeight: "500",
+            }}
           >
             Email
           </Typography>
@@ -37,11 +88,17 @@ export default function FormSignIn({ onNext }) {
         <StyledTextField
           placeholder="Enter your email"
           sx={{ width: "350px" }}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </Stack>
       <Stack gap={1}>
         <Typography
-          sx={{ fontSize: "Lato", fontSize: "16px", fontWeight: "500" }}
+          sx={{
+            fontFamily: "Lato",
+            fontSize: "16px",
+            fontWeight: "500",
+          }}
         >
           Password
         </Typography>
@@ -49,6 +106,8 @@ export default function FormSignIn({ onNext }) {
           placeholder="Enter your password"
           type="password"
           sx={{ width: "350px" }}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <Typography
           sx={{
@@ -62,9 +121,15 @@ export default function FormSignIn({ onNext }) {
           Forgot Password
         </Typography>
       </Stack>
-      <Stack>
+      {errorMsg && (
+        <Typography sx={{ color: "red", fontFamily: "Lato" }}>
+          {errorMsg}
+        </Typography>
+      )}
+      <Stack spacing={2}>
         <Button
           variant="contained"
+          onClick={handleCredentialsLogin}
           sx={{
             textTransform: "none",
             backgroundColor: "var(--primary-color)",
@@ -77,6 +142,22 @@ export default function FormSignIn({ onNext }) {
           disableElevation
         >
           Sign In
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={handleGoogleSignIn}
+          sx={{
+            textTransform: "none",
+            borderRadius: "4px",
+            fontFamily: "Lato",
+            fontSize: "18px",
+            height: "40px",
+            width: "350px",
+            color: "var(--primary-color)",
+            borderColor: "var(--primary-color)",
+          }}
+        >
+          Sign In with Google
         </Button>
       </Stack>
     </Stack>
