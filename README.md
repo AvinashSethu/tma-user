@@ -1,6 +1,6 @@
 # The Masters Academy
 
-**The Masters Academy** is a comprehensive Learning Management System (LMS) developed by **Incrix Techlutions**. Designed for modern educational institutions, the platform offers robust course management, exam scheduling, resource sharing, and white-label capabilities to support schools, colleges, and training centers.
+**The Masters Academy** is a comprehensive Learning Management System (LMS) developed by **Incrix Techlutions**. Designed to empower educational institutions with robust course management, exam scheduling, and resource sharing, this platform also supports a fully white-labeled solution that can be customized for schools, colleges, and training centers.
 
 ---
 
@@ -13,6 +13,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Deployment](#deployment)
+- [Authentication](#authentication)
 - [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
@@ -21,32 +22,29 @@
 
 ## Overview
 
-The Masters Academy is built to provide a flexible, scalable, and user-friendly LMS that streamlines educational management and enhances the learning experience. The project is designed with a focus on performance, ease of use, and adaptability, making it ideal for institutions seeking a white-labeled solution.
+The Masters Academy is built using modern web technologies to provide an intuitive, scalable, and high-performance learning platform. It allows administrators to manage courses, schedule exams, upload resources, and customize the experience through white-labeling. This project is developed by **Incrix Techlutions**.
 
 ---
 
 ## Features
 
 - **User & Admin Dashboards:**  
-  Custom dashboards for both administrators and learners for seamless interaction.
+  Custom dashboards for both administrators and learners, offering real-time data and seamless navigation.
 
 - **Course Management:**  
-  Create, update, and manage courses with support for multimedia content.
+  Create, update, and organize courses with support for multimedia content and interactive lessons.
 
 - **Exam & Practice Tests:**  
-  Integrated tools for exam scheduling, practice tests, and performance tracking.
+  Integrated exam scheduling and practice test modules with detailed performance analytics.
 
 - **Resource Library:**  
-  Efficiently upload, manage, and distribute learning resources using AWS S3.
-
-- **Optimized Data Model:**  
-  Leverages AWS DynamoDB single-table design for high performance and scalability.
+  Efficiently manage and distribute learning resources with AWS S3 storage.
 
 - **Responsive & White-Label Design:**  
-  Mobile-friendly UI with customizable branding options.
+  Mobile-friendly UI and customizable branding to meet different institution needs.
 
 - **Drag & Drop Interface:**  
-  Intuitive drag and drop support for reordering lessons and content.
+  Intuitive drag and drop functionality for reordering lessons and organizing content.
 
 ---
 
@@ -59,10 +57,10 @@ The Masters Academy is built to provide a flexible, scalable, and user-friendly 
   Node.js, Express, AWS DynamoDB, AWS S3
 
 - **Authentication:**  
-  JWT-based authentication
+  NextAuth for secure authentication
 
 - **Utilities:**  
-  React DnD for drag and drop, Axios for API requests
+  React DnD for drag & drop, Axios (or native fetch) for API calls
 
 - **Deployment:**  
   Vercel, AWS
@@ -71,7 +69,24 @@ The Masters Academy is built to provide a flexible, scalable, and user-friendly 
 
 ## Architecture
 
-The Masters Academy utilizes a serverless architecture with a single-table design in AWS DynamoDB and cloud storage via AWS S3. The frontend is built using Next.js for Server-Side Rendering (SSR) and static site generation, while the backend APIs are built with Node.js and Express. This modular design allows for seamless scaling and customization for white-label solutions.
+The project is built on a modern serverless architecture:
+
+- **AWS DynamoDB:**  
+  Implements a single-table design for efficient and scalable data management.
+
+- **AWS S3:**  
+  Provides cloud storage for resource uploads (files, thumbnails, videos, etc.).
+
+- **Next.js:**  
+  Delivers Server-Side Rendering (SSR) and static site generation, ensuring fast performance and good SEO.
+
+- **Node.js & Express:**  
+  Serve as the backend API layer for handling business logic and integrations with AWS services.
+
+- **NextAuth:**  
+  Handles secure authentication and session management for users.
+
+This modular architecture supports a white-label model, making it easy to customize the platform for various institutions.
 
 ---
 
@@ -81,7 +96,7 @@ The Masters Academy utilizes a serverless architecture with a single-table desig
 
 - Node.js (v14+ recommended)
 - npm or yarn
-- AWS credentials for DynamoDB and S3
+- AWS account with configured DynamoDB and S3 access
 
 ### Clone the Repository
 
