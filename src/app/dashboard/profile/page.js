@@ -18,7 +18,6 @@ export default function Profile() {
         <Stack sx={{ display: { xs: "none", md: "block" } }}>
           <Header />
         </Stack>
-
         <Stack
           alignItems="center"
           flexDirection="row"

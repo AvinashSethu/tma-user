@@ -1,6 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import mastersLogo from "@/public/images/masters-logo.svg";
 
 export default function MasterLogo({ isSideNavOpen }) {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function MasterLogo({ isSideNavOpen }) {
       }}
     >
       <Image
-        src={process.env.NEXT_PUBLIC_LOGO_URL}
+        src={mastersLogo.src}
         alt="logo"
         width={60}
         height={26}
