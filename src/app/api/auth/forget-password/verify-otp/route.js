@@ -7,7 +7,7 @@ export async function POST(request) {
       { success: false, error: "Email and OTP are required" },
       { status: 400 }
     );
-  }
+  } 
   try {
     const result = await verifyOTPForPasswordReset({ email, otp });
     return Response.json(result);

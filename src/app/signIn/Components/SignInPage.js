@@ -2,14 +2,8 @@
 import { Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import FormSignIn from "./FormSignIn";
-import { useState } from "react";
-import FormRecover from "./FormRecover";
 
 export default function SignInPage() {
-  const [step, setStep ] = useState(1);
-  const handleNextStep = () => {
-    setStep(step + 1);
-  }
   return (
     <Stack
       width="50%"
@@ -64,8 +58,7 @@ export default function SignInPage() {
         >
           Sign In to your account
         </Typography>
-        {step === 1 && <FormSignIn onNext={handleNextStep} />}
-        {step === 2 && <FormRecover />}
+        <FormSignIn />
       </Stack>
       <Stack
         flexDirection="row"

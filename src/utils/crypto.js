@@ -1,6 +1,7 @@
 "server only";
 
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 /**
  * Compares a plain text password with a stored hash.
@@ -57,5 +58,9 @@ export function generateToken(payload) {
  * @returns {string} - The payload of the token.
  */
 export function verifyToken(token) {
-  return jwt.verify(token, process.env.JWT_SECRET);
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    return { email: null, id: null };
+  }
 }

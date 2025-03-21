@@ -8,6 +8,7 @@ import {
 } from "@aws-sdk/lib-dynamodb";
 import {
   hashPassword,
+  verifyPassword,
   generateOTP,
   generateToken,
   verifyToken,
@@ -200,6 +201,7 @@ export async function forgotPassword({ email }) {
   if (!user) {
     throw new Error("User not found");
   }
+  user.otp = user.otp || {};
   user.otp.otp = generateOTP();
   user.otp.expiresAt = Date.now() + 1000 * 60 * 5; // 5 minutes from now
   user.otp.attemptsRemaining = 3;
@@ -253,23 +255,46 @@ export async function verifyOTPForPasswordReset({ email, otp }) {
     throw new Error("OTP expired");
   }
 
+  //generate token
+  const token = generateToken({ id: user.pKey.split("#")[1], email });
+  //token is reserved keyword in dynamoDB so we need to use a different name
+  await dynamoDB.send(
+    new UpdateCommand({
+      TableName: `${process.env.AWS_DB_NAME}users`,
+      Key: { pKey: user.pKey, sKey: user.sKey },
+      UpdateExpression: "set otp.#tk = :token, otp.isTokenUsed = :isTokenUsed",
+      ExpressionAttributeNames: {
+        "#tk": "token",
+      },
+      ExpressionAttributeValues: {
+        ":token": token,
+        ":isTokenUsed": false,
+      },
+    })
+  );
   return {
     success: true,
     message: "OTP verified",
     data: {
-      token: generateToken({ id: user.pKey.split("#")[1], email }),
+      token: token,
     },
   };
 }
 
 export async function updateUserPassword({ password, token }) {
   const { email, id } = verifyToken(token);
+  if (!email || !id) {
+    throw new Error("Time out");
+  }
   const user = await getUserByEmail(email);
   if (!user) {
     throw new Error("User not found");
   }
   if (!user.emailVerified) {
     throw new Error("Email not verified");
+  }
+  if (user.otp.isTokenUsed) {
+    throw new Error("Token already used");
   }
   try {
     if (id !== user.pKey.split("#")[1]) {
@@ -279,16 +304,28 @@ export async function updateUserPassword({ password, token }) {
     throw new Error("Invalid token");
   }
   const hashedPassword = await hashPassword(password);
-  if (user.password === hashedPassword) {
-    throw new Error("New password cannot be the same as the old password");
+  //check if new password is the same as the old password
+  if (user.password) {
+    const isSamePassword = await verifyPassword(password, user.password);
+    if (isSamePassword) {
+      throw new Error("New password cannot be the same as the old password");
+    }
   }
   try {
     await dynamoDB.send(
       new UpdateCommand({
         TableName: `${process.env.AWS_DB_NAME}users`,
         Key: { pKey: user.pKey, sKey: user.sKey },
-        UpdateExpression: "set password = :password",
-        ExpressionAttributeValues: { ":password": hashedPassword },
+        UpdateExpression:
+          "set password = :password, otp.isTokenUsed = :isTokenUsed, otp.#tk = :token",
+        ExpressionAttributeNames: {
+          "#tk": "token",
+        },
+        ExpressionAttributeValues: {
+          ":password": hashedPassword,
+          ":isTokenUsed": true,
+          ":token": null,
+        },
       })
     );
     return {

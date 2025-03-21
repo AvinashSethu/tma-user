@@ -5,4 +5,9 @@ const withPWA = withPWAInit({
   dest: "public",
 });
 
-export default withPWA({});
+const nextConfig = {
+  transpilePackages: ["mui-one-time-password-input"],
+  // Any other configurations you need
+};
+
+export default withPWA(nextConfig);

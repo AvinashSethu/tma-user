@@ -1,40 +1,106 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, useSession, signOut } from "next-auth/react";
 import StyledTextField from "@/src/Components/StyledTextField/StyledTextField";
-import { Button, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Stack,
+  Typography,
+  IconButton,
+} from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
+import CloseIcon from "@mui/icons-material/Close";
+import { useSnackbar } from "notistack";
 
-export default function FormSignIn({ onNext }) {
+const FormSignIn = memo(() => {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [formState, setFormState] = useState({
+    email: "",
+    password: "",
+    errorMsg: "",
+    isLoading: false,
+    isGoogleLoading: false,
+  });
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const handleCredentialsLogin = async (e) => {
-    e.preventDefault();
-    setErrorMsg("");
-    const res = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-    if (res.error) {
-      setErrorMsg(res.error);
-    } else {
-      router.push("/dashboard");
+  // Redirect if already logged in
+  // useEffect(() => {
+  //   if (session) {
+  //     router.push("/dashboard");
+  //   }
+  // }, [session, router]);
+
+  // Show error snackbar when error message changes
+  useEffect(() => {
+    if (formState.errorMsg) {
+      const snackbarAction = (key) => (
+        <IconButton
+          size="small"
+          onClick={() => closeSnackbar(key)}
+          sx={{ color: "white" }}
+        >
+          <CloseIcon />
+        </IconButton>
+      );
+
+      enqueueSnackbar(formState.errorMsg, {
+        variant: "error",
+        autoHideDuration: 3000,
+        action: snackbarAction,
+      });
     }
-  };
+  }, [formState.errorMsg, enqueueSnackbar, closeSnackbar]);
 
-  const handleGoogleSignIn = async () => {
-    // Initiates the Google OAuth flow
+  // Use callbacks to prevent unnecessary re-renders
+  const handleInputChange = useCallback(
+    (field) => (e) => {
+      setFormState((prev) => ({ ...prev, [field]: e.target.value }));
+    },
+    []
+  );
+
+  const handleCredentialsLogin = useCallback(
+    async (e) => {
+      e.preventDefault();
+      setFormState((prev) => ({ ...prev, isLoading: true, errorMsg: "" }));
+
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: formState.email,
+        password: formState.password,
+      });
+
+      if (res.error) {
+        setFormState((prev) => ({
+          ...prev,
+          errorMsg: res.error,
+          isLoading: false,
+        }));
+      } else {
+        router.push("/dashboard");
+        setFormState((prev) => ({ ...prev, isLoading: false }));
+      }
+    },
+    [formState.email, formState.password, router]
+  );
+
+  const handleGoogleSignIn = useCallback(async () => {
+    setFormState((prev) => ({ ...prev, isGoogleLoading: true }));
     await signIn("google");
-  };
+  }, []);
+
+  // Navigation helpers
+  const navigateToSignUp = useCallback(() => router.push("/signUp"), [router]);
 
   if (status === "loading") {
-    return <Typography>Loading...</Typography>;
+    return <CircularProgress sx={{ color: "var(--primary-color)" }} />;
   }
+
+  const { email, password, isLoading, isGoogleLoading } = formState;
+  const isButtonDisabled = isLoading || isGoogleLoading;
 
   if (session) {
     return (
@@ -60,8 +126,11 @@ export default function FormSignIn({ onNext }) {
         justifyContent: "center",
         alignItems: "center",
       }}
+      component="form"
+      onSubmit={handleCredentialsLogin}
+      noValidate
     >
-      <Stack gap={1}>
+      <Stack gap={1} width="100%">
         <Stack flexDirection="row" justifyContent="space-between">
           <Typography
             sx={{
@@ -80,19 +149,21 @@ export default function FormSignIn({ onNext }) {
               color: "var(--sec-color)",
               cursor: "pointer",
             }}
-            onClick={() => router.push("/signUp")}
+            onClick={navigateToSignUp}
           >
             Create new account
           </Typography>
         </Stack>
         <StyledTextField
           placeholder="Enter your email"
-          sx={{ width: "350px" }}
+          sx={{ width: "100%" }}
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleInputChange("email")}
+          type="email"
+          autoComplete="email"
         />
       </Stack>
-      <Stack gap={1}>
+      <Stack gap={1} width="100%">
         <Typography
           sx={{
             fontFamily: "Lato",
@@ -105,9 +176,10 @@ export default function FormSignIn({ onNext }) {
         <StyledTextField
           placeholder="Enter your password"
           type="password"
-          sx={{ width: "350px" }}
+          sx={{ width: "100%" }}
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleInputChange("password")}
+          autoComplete="current-password"
         />
         <Typography
           sx={{
@@ -116,50 +188,67 @@ export default function FormSignIn({ onNext }) {
             color: "var(--sec-color)",
             cursor: "pointer",
           }}
-          onClick={onNext}
+          onClick={() => router.push("/forget-password")}
         >
           Forgot Password
         </Typography>
       </Stack>
-      {errorMsg && (
-        <Typography sx={{ color: "red", fontFamily: "Lato" }}>
-          {errorMsg}
-        </Typography>
-      )}
-      <Stack spacing={2}>
-        <Button
-          variant="contained"
-          onClick={handleCredentialsLogin}
-          sx={{
-            textTransform: "none",
-            backgroundColor: "var(--primary-color)",
-            borderRadius: "4px",
-            fontFamily: "Lato",
-            fontSize: "18px",
-            height: "40px",
-            width: "350px",
-          }}
-          disableElevation
-        >
-          Sign In
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={handleGoogleSignIn}
-          sx={{
-            textTransform: "none",
-            borderRadius: "4px",
-            fontFamily: "Lato",
-            fontSize: "18px",
-            height: "40px",
-            width: "350px",
-            color: "var(--primary-color)",
-            borderColor: "var(--primary-color)",
-          }}
-        >
-          Sign In with Google
-        </Button>
-      </Stack>
+
+      <Button
+        variant="contained"
+        type="submit"
+        disabled={isButtonDisabled}
+        sx={{
+          textTransform: "none",
+          backgroundColor: "var(--primary-color)",
+          borderRadius: "4px",
+          fontFamily: "Lato",
+          fontSize: "18px",
+          height: "40px",
+          width: "100%",
+        }}
+        disableElevation
+      >
+        {isLoading ? (
+          <CircularProgress size={24} sx={{ color: "white" }} />
+        ) : (
+          "Sign In"
+        )}
+      </Button>
+
+      <Typography color="var(--sec-color)">Or</Typography>
+
+      <Button
+        variant="outlined"
+        disabled={isButtonDisabled}
+        onClick={handleGoogleSignIn}
+        sx={{
+          textTransform: "none",
+          borderRadius: "4px",
+          fontFamily: "Lato",
+          fontSize: "18px",
+          height: "40px",
+          width: "100%",
+          color: "var(--primary-color)",
+          borderColor: "var(--primary-color)",
+        }}
+        startIcon={
+          isGoogleLoading ? (
+            <CircularProgress
+              size={20}
+              sx={{ color: "var(--primary-color)" }}
+            />
+          ) : (
+            <GoogleIcon />
+          )
+        }
+      >
+        Sign In with Google
+      </Button>
     </Stack>
   );
-}
+});
+
+FormSignIn.displayName = "FormSignIn";
+
+export default FormSignIn;

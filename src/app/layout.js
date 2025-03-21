@@ -68,7 +68,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <SessionProvider>
-          <SnackbarProvider maxSnack={2}>{children}</SnackbarProvider>
+          <SnackbarProvider maxSnack={2} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+            {children}
+          </SnackbarProvider>
         </SessionProvider>
       </body>
     </html>
