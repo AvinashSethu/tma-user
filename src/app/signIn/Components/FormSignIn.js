@@ -197,7 +197,7 @@ const FormSignIn = memo(() => {
       <Button
         variant="contained"
         type="submit"
-        disabled={isButtonDisabled}
+        disabled={isButtonDisabled || !email || !password}
         sx={{
           textTransform: "none",
           backgroundColor: "var(--primary-color)",
@@ -208,15 +208,16 @@ const FormSignIn = memo(() => {
           width: "100%",
         }}
         disableElevation
+        startIcon={
+          isLoading ? (
+            <CircularProgress size={24} sx={{ color: "white" }} />
+          ) : null
+        }
       >
-        {isLoading ? (
-          <CircularProgress size={24} sx={{ color: "white" }} />
-        ) : (
-          "Sign In"
-        )}
+        Continue
       </Button>
 
-      <Typography color="var(--sec-color)">Or</Typography>
+      <Typography color="var(--text4)">Or</Typography>
 
       <Button
         variant="outlined"
@@ -243,7 +244,7 @@ const FormSignIn = memo(() => {
           )
         }
       >
-        Sign In with Google
+        Continue with Google
       </Button>
     </Stack>
   );

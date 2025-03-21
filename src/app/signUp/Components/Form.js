@@ -1,23 +1,71 @@
 "use client";
+import { useCallback, memo } from "react";
 import StyledTextField from "@/src/Components/StyledTextField/StyledTextField";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, CircularProgress, Stack, Typography } from "@mui/material";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import ContinueWithGoogle from "@/src/Components/ContinueWithGoogle/ContinueWithGoogle";
 
-export default function Form({onNext}) {
+function Form({
+  email,
+  password,
+  setEmail,
+  setPassword,
+  handleGetOTP,
+  isLoading,
+  validationError,
+  setConfirmPassword,
+  confirmPassword,
+}) {
   const router = useRouter();
+
+  // Memoize input handlers
+  const handleEmailChange = useCallback(
+    (e) => setEmail(e.target.value),
+    [setEmail]
+  );
+  const handlePasswordChange = useCallback(
+    (e) => setPassword(e.target.value),
+    [setPassword]
+  );
+  const handleConfirmPasswordChange = useCallback(
+    (e) => setConfirmPassword(e.target.value),
+    [setConfirmPassword]
+  );
+
+  // Handle "Enter" key to trigger OTP fetch
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Enter") {
+        handleGetOTP();
+      }
+    },
+    [handleGetOTP]
+  );
+
+  // Determine if the Get OTP button should be disabled.
+  const isButtonDisabled =
+    isLoading ||
+    Boolean(validationError) ||
+    password !== confirmPassword ||
+    !email ||
+    !password ||
+    !confirmPassword;
+
   return (
     <Stack
       sx={{
         width: "350px",
-        gap: "20px",
+        gap: 2,
         justifyContent: "center",
         alignItems: "center",
       }}
     >
+      {/* Email Section */}
       <Stack gap={1}>
-        <Stack flexDirection="row" justifyContent="space-between">
+        <Stack direction="row" justifyContent="space-between">
           <Typography
-            sx={{ fontSize: "Lato", fontSize: "16px", fontWeight: "500" }}
+            sx={{ fontFamily: "Lato", fontSize: "16px", fontWeight: 500 }}
           >
             Email
           </Typography>
@@ -25,7 +73,7 @@ export default function Form({onNext}) {
             sx={{
               fontFamily: "Lato",
               fontSize: "16px",
-              fontWeight: "500",
+              fontWeight: 500,
               color: "var(--sec-color)",
               cursor: "pointer",
             }}
@@ -36,25 +84,64 @@ export default function Form({onNext}) {
         </Stack>
         <StyledTextField
           placeholder="Enter your email"
+          value={email}
+          onChange={handleEmailChange}
+          onKeyDown={handleKeyDown}
           sx={{ width: "350px" }}
         />
       </Stack>
-      <Stack gap={1}>
+
+      {/* Password Section */}
+      <Stack gap={1} width="100%">
         <Typography
-          sx={{ fontSize: "Lato", fontSize: "16px", fontWeight: "500" }}
+          sx={{ fontFamily: "Lato", fontSize: "16px", fontWeight: 500 }}
         >
           Password
         </Typography>
         <StyledTextField
-          placeholder="Enter your password"
+          placeholder="Enter your new password"
           type="password"
-          sx={{ width: "350px" }}
+          value={password}
+          onChange={handlePasswordChange}
+          onKeyDown={handleKeyDown}
+          sx={{ width: "100%" }}
         />
-        
+        <StyledTextField
+          placeholder="Confirm your new password"
+          type="password"
+          value={confirmPassword}
+          onChange={handleConfirmPasswordChange}
+          onKeyDown={handleKeyDown}
+          helperText={
+            password !== confirmPassword ? "Passwords do not match" : ""
+          }
+          error={password !== confirmPassword}
+          sx={{ width: "100%" }}
+        />
+        {validationError && (
+          <Typography
+            sx={{
+              fontFamily: "Lato",
+              fontSize: "12px",
+              fontWeight: 400,
+              color: "var(--delete-color)",
+            }}
+          >
+            {validationError}
+          </Typography>
+        )}
       </Stack>
-      <Stack>
+
+      {/* Get OTP Button */}
+      <Stack gap={1} width="100%" alignItems="center">
         <Button
           variant="contained"
+          onClick={handleGetOTP}
+          disableElevation
+          disabled={isButtonDisabled}
+          startIcon={
+            isLoading ? <CircularProgress size={20} color="inherit" /> : null
+          }
           sx={{
             textTransform: "none",
             backgroundColor: "var(--primary-color)",
@@ -64,19 +151,17 @@ export default function Form({onNext}) {
             height: "40px",
             width: "350px",
           }}
-          onClick={onNext}
-          disableElevation
-          // disabled={isLoading}
         >
-          {/* {isLoading ? (
-              <CircularProgress size={24} sx={{ color: "var(--sec-color)" }} />
-            ) : (
-              "Sign In"
-            )} */}
           Get OTP
         </Button>
-        
+        <Typography color="var(--text4)">Or</Typography>
+        <ContinueWithGoogle
+          isButtonDisabled={isLoading}
+          isLoading={isLoading}
+        />
       </Stack>
     </Stack>
   );
 }
+
+export default memo(Form);

@@ -121,24 +121,31 @@ export async function resendOTP({ email }) {
   if (!user) {
     throw new Error("User not found");
   }
-  if (user.otp.expiresAt > Date.now()) {
+  if (user.otp.expiresAt > Date.now() && user.otp.attemptsRemaining > 0) {
     await sendOTPToMail({ to: email, otp: user.otp.otp });
     return {
       success: true,
       message: "OTP sent",
     };
   }
+
+  if (user.otp.attemptsRemaining === 0) {
+    throw new Error("OTP attempts exceeded");
+  }
+
   user.otp.otp = generateOTP();
   user.otp.expiresAt = Date.now() + 1000 * 60 * 5; // 5 minutes from now
-  user.otp.attemptsRemaining = 3;
 
   try {
     await dynamoDB.send(
       new UpdateCommand({
         TableName: `${process.env.AWS_DB_NAME}users`,
         Key: { pKey: user.pKey, sKey: user.sKey },
-        UpdateExpression: "set otp = :otp",
-        ExpressionAttributeValues: { ":otp": user.otp },
+        UpdateExpression: "set otp.otp = :otp, otp.expiresAt = :expiresAt",
+        ExpressionAttributeValues: {
+          ":otp": user.otp.otp,
+          ":expiresAt": user.otp.expiresAt,
+        },
       })
     );
     await sendOTPToMail({ to: email, otp: user.otp.otp });

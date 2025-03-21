@@ -1,17 +1,133 @@
 "use client";
-import { Stack, Typography } from "@mui/material";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { enqueueSnackbar } from "notistack";
+import { CircularProgress, Stack, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Form from "./Form";
-import { useState } from "react";
 import FormOTP from "./FormOTP";
-import FormCreate from "./FormCreate";
+import validatePassword from "@/src/utils/passwordValidator";
 
 export default function SignupPage() {
-  const [step, setStep] = useState(1);
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const { status } = useSession();
+  const [validationError, setValidationError] = useState("");
+  const [isOTPSent, setIsOTPSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleNextStep = () => {
-    setStep(step + 1);
-  };
+  // Validate password on change
+  useEffect(() => {
+    const error = password ? validatePassword(password).error : null;
+    setValidationError(error);
+  }, [password]);
+
+  // Memoized error display helper
+  const showError = useCallback((message) => {
+    enqueueSnackbar(message, { variant: "error" });
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    console.log(status);
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
+
+  // Get OTP handler
+  const handleGetOTP = useCallback(async () => {
+    setIsLoading(true);
+
+    // Field validation
+    if (!email || !password || !confirmPassword) {
+      return showError("Please fill all the fields");
+    }
+    if (password !== confirmPassword) {
+      return showError("Passwords do not match");
+    }
+    if (validationError) {
+      return showError(validationError);
+    }
+
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setIsOTPSent(true);
+      } else {
+        showError(data.message || "Failed to send OTP");
+      }
+    } catch (error) {
+      showError(error.message || "Failed to send OTP");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [email, password, confirmPassword, validationError, showError]);
+
+  // Verify OTP handler
+  const handleVerifyOTP = useCallback(
+    async (enteredOTP) => {
+      setIsLoading(true);
+      try {
+        const res = await fetch("/api/auth/verify-otp", {
+          method: "POST",
+          body: JSON.stringify({ email, otp: enteredOTP || otp }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          enqueueSnackbar("Account created successfully", {
+            variant: "success",
+          });
+          router.push("/signIn");
+        } else {
+          showError(data.message || "Failed to verify OTP");
+        }
+      } catch (error) {
+        showError(error.message || "Failed to verify OTP");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [email, otp, router, showError]
+  );
+
+  // Resend OTP handler
+  const handleResendOTP = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/auth/resend-otp", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setIsOTPSent(true);
+        enqueueSnackbar("OTP resent", { variant: "success" });
+      } else {
+        showError(data.message || "Failed to resend OTP");
+        setIsOTPSent(false);
+        setOtp("");
+        setIsLoading(false);
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setValidationError("");
+      }
+    } catch (error) {
+      showError(error.message || "Failed to resend OTP");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [email, showError]);
+
   return (
     <Stack
       width="50%"
@@ -20,12 +136,9 @@ export default function SignupPage() {
       alignItems="center"
     >
       <Stack
-        sx={{
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
+        sx={{ justifyContent: "center", alignItems: "center", height: "100vh" }}
       >
+        {/* Logo Section */}
         <Stack
           sx={{
             width: "110px",
@@ -47,7 +160,7 @@ export default function SignupPage() {
             }}
           >
             <Image
-              src="images/masters-logo.svg"
+              src="/images/masters-logo.svg"
               alt="logo"
               width={48}
               height={48}
@@ -64,12 +177,35 @@ export default function SignupPage() {
             marginBottom: "35px",
           }}
         >
-          Sign up with your account
+          Create your account
         </Typography>
-        {step === 1 && <Form onNext={handleNextStep} />}
-        {step === 2 && <FormOTP onNext={handleNextStep} />}
-        {step === 3 && <FormCreate />}
+
+        {/* Conditional Form Rendering */}
+        {status === "loading" || status === "authenticated" ? (
+          <CircularProgress />
+        ) : isOTPSent ? (
+          <FormOTP
+            otp={otp}
+            setOtp={setOtp}
+            handleVerifyOTP={handleVerifyOTP}
+            isLoading={isLoading}
+            handleResendOTP={handleResendOTP}
+          />
+        ) : (
+          <Form
+            email={email}
+            password={password}
+            setEmail={setEmail}
+            setPassword={setPassword}
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            handleGetOTP={handleGetOTP}
+            isLoading={isLoading}
+            validationError={validationError}
+          />
+        )}
       </Stack>
+      {/* Footer */}
       <Stack
         flexDirection="row"
         width="100%"
@@ -101,7 +237,7 @@ export default function SignupPage() {
             Designed By
           </Typography>
           <Image
-            src="images/incrix-logo.svg"
+            src="/images/incrix-logo.svg"
             alt="incrix"
             width={104}
             height={24}
