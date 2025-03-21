@@ -47,6 +47,11 @@ export default function FormRecover() {
       const data = await result.json();
       if (data.success) {
         setIsOTPSent(true);
+      } else {
+        enqueueSnackbar(data.message, {
+          variant: "error",
+          autoHideDuration: 3000,
+        });
       }
     } catch (error) {
       console.error(error);

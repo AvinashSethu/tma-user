@@ -6,6 +6,6 @@ export async function POST(req) {
     const user = await createUser({ email, password });
     return Response.json(user);
   } catch (error) {
-    return Response.json({ error: error.message }, { status: 500 });
+    return Response.json({ success: false, message: error.message }, { status: 500 });
   }
 }
