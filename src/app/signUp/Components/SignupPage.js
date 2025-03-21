@@ -2,7 +2,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
-import { Stack, Typography } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Form from "./Form";
 import FormOTP from "./FormOTP";
@@ -14,6 +15,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otp, setOtp] = useState("");
+  const { status } = useSession();
   const [validationError, setValidationError] = useState("");
   const [isOTPSent, setIsOTPSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +31,13 @@ export default function SignupPage() {
     enqueueSnackbar(message, { variant: "error" });
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    console.log(status);
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
 
   // Get OTP handler
   const handleGetOTP = useCallback(async () => {
@@ -172,7 +181,9 @@ export default function SignupPage() {
         </Typography>
 
         {/* Conditional Form Rendering */}
-        {isOTPSent ? (
+        {status === "loading" || status === "authenticated" ? (
+          <CircularProgress />
+        ) : isOTPSent ? (
           <FormOTP
             otp={otp}
             setOtp={setOtp}
