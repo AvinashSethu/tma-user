@@ -137,8 +137,13 @@ export async function resendOTP({ email }) {
       new UpdateCommand({
         TableName: `${process.env.AWS_DB_NAME}users`,
         Key: { pKey: user.pKey, sKey: user.sKey },
-        UpdateExpression: "set otp = :otp",
-        ExpressionAttributeValues: { ":otp": user.otp },
+        UpdateExpression:
+          "set otp.otp = :otp, otp.expiresAt = :expiresAt, otp.attemptsRemaining = :attemptsRemaining",
+        ExpressionAttributeValues: {
+          ":otp": user.otp.otp,
+          ":expiresAt": user.otp.expiresAt,
+          ":attemptsRemaining": user.otp.attemptsRemaining,
+        },
       })
     );
     await sendOTPToMail({ to: email, otp: user.otp.otp });
