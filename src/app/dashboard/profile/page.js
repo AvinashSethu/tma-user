@@ -1,7 +1,7 @@
 import Header from "@/src/Components/Header/Header";
 import MobileHeader from "@/src/Components/MobileHeader/MobileHeader";
 import StyledTextField from "@/src/Components/StyledTextField/StyledTextField";
-import { Edit, Logout } from "@mui/icons-material";
+import { Circle, Edit, Logout } from "@mui/icons-material";
 import { Avatar, Button, Stack, Typography } from "@mui/material";
 import incrix_logo from "@/public/images/incrix-logo.svg";
 import Image from "next/image";
@@ -11,7 +11,7 @@ export default function Profile() {
     <>
       <MobileHeader />
       <Stack
-        padding="20px"
+        padding={{ xs: "10px", md: "20px" }}
         gap="20px"
         sx={{ minHeight: "100vh", overflowY: "visible" }}
       >
@@ -131,8 +131,14 @@ export default function Profile() {
         >
           Logout
         </Button>
-        <Stack sx={{ marginTop: "auto", gap: "6px" ,paddingBottom:"40px"}}>
-          <Image src={incrix_logo} alt="logo" />
+        <Stack
+          sx={{
+            marginTop: "auto",
+            gap: "5px",
+            paddingBottom: { xs: "50px", md: "0px" },
+          }}
+        >
+          <Image src={incrix_logo} alt="logo" style={{ color: "red" }} />
           <Typography
             sx={{
               fontFamily: "Lato",
@@ -143,7 +149,9 @@ export default function Profile() {
           >
             Crafted by Incrix Techlutions LLP, Tamil Nadu.
           </Typography>
-          <Typography sx={{ fontFamily: "Lato", fontSize: "12px",color: "var(--text3)" }}>
+          <Typography
+            sx={{ fontFamily: "Lato", fontSize: "12px", color: "var(--text3)" }}
+          >
             Version: 1.0.1
           </Typography>
         </Stack>

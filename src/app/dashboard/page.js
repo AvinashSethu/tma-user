@@ -65,16 +65,15 @@ export default function Home() {
   return (
     <>
       <MobileHeader />
-      <Stack
-        padding={{ xs: "10px", md: "20px" }}
-        gap="20px"
-        sx={{ marginBottom: "60px" }}
-      >
-        <Stack gap="15px">
+      <Stack gap="20px" alignItems="center">
+        <Stack
+          padding={{ xs: "10px", md: "20px" }}
+          gap="20px"
+          sx={{ marginBottom: { xs: "60px", md: "0px" } }}
+        >
           <Header />
           <Stack
             flexDirection={{ xs: "column", md: "row" }}
-            width="100%"
             gap="30px"
             justifyContent="center"
           >
@@ -112,10 +111,13 @@ export default function Home() {
                 </Typography>
                 <MyCourses />
               </Stack>
-
               <Subscribe />
               <Typography
-                sx={{ fontFamily: "Lato", fontSize: "20px", fontWeight: "700" }}
+                sx={{
+                  fontFamily: "Lato",
+                  fontSize: "20px",
+                  fontWeight: "700",
+                }}
               >
                 Weekly quiz
               </Typography>
@@ -138,7 +140,11 @@ export default function Home() {
             </Stack>
             <Stack gap="15px">
               <Typography
-                sx={{ fontFamily: "Lato", fontSize: "20px", fontWeight: "700" }}
+                sx={{
+                  fontFamily: "Lato",
+                  fontSize: "20px",
+                  fontWeight: "700",
+                }}
               >
                 Daily Progress
               </Typography>

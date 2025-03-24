@@ -12,7 +12,7 @@ export default function Header({ button = [], back }) {
   return (
     <Stack
       sx={{
-        width: "100%",
+        // width: "100%",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",

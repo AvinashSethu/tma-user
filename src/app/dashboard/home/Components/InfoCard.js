@@ -18,7 +18,7 @@ export default function InfoCard() {
       flexDirection="row"
       flexWrap="wrap"
       alignItems="center"
-      justifyContent="center"
+      justifyContent="space-between"
       gap={2}
       sx={{
         border: "1px solid var(--border-color)",

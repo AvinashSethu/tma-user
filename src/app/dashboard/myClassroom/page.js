@@ -24,12 +24,12 @@ export default function MyClassroom() {
   const classroomList = [
     {
       title: "ECE 3rd year",
-      icon:<Image src={ group.src} alt="icon" width={26} height={26} />,
+      icon: <Image src={group.src} alt="icon" width={26} height={26} />,
       button: <MoreVert />,
     },
     {
       title: "Placement PSREC",
-      icon: <Image src={ group.src} alt="icon" width={26} height={26} />,
+      icon: <Image src={group.src} alt="icon" width={26} height={26} />,
       button: <MoreVert />,
     },
   ];
@@ -120,7 +120,7 @@ const JoinClassroomDialog = ({ isDialogOpen, dialogClose }) => {
         </Button>
       }
     >
-      <DialogContent sx={{ padding: { xs: "10px", md: "20px" } }}>
+      <DialogContent sx={{ padding: { xs: "10px", md: "10px 20px" } }}>
         <Stack>
           <StyledTextField placeholder="Enter batch Code" />
         </Stack>

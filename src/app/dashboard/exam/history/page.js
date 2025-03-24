@@ -5,13 +5,15 @@ import { Button, Stack, Typography } from "@mui/material";
 import mocks from "@/public/icons/mocks.svg";
 import Header from "@/src/Components/Header/Header";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function History() {
   const router = useRouter();
   const historyList = [
     {
       title: "Placements (Institute)",
-      icon: mocks.src,
+      icon: <Image src={mocks.src} alt="" width={24} height={24} />,
+      // icon: mocks.src,
       subTitle: (
         <Stack flexDirection="row" gap="20px">
           <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
@@ -28,7 +30,7 @@ export default function History() {
     },
     {
       title: "Monday (August)",
-      icon: mocks.src,
+      icon: <Image src={mocks.src} alt="" width={24} height={24} />,
       subTitle: (
         <Stack flexDirection="row" gap="20px">
           <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
@@ -45,7 +47,7 @@ export default function History() {
     },
     {
       title: "Practice Test",
-      icon: mocks.src,
+      icon: <Image src={mocks.src} alt="" width={24} height={24} />,
       subTitle: (
         <Stack flexDirection="row" gap="20px">
           <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
@@ -90,9 +92,6 @@ export default function History() {
             <SearchBox />
             <Button
               variant="contained"
-              onClick={() => {
-                router.push("/dashboard/exam/results");
-              }}
               sx={{
                 textTransform: "none",
                 backgroundColor: "var(--primary-color)",
