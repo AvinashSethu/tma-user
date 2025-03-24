@@ -14,18 +14,34 @@ export async function userProfileSetup(userID, name) {
       pKey: `USER#${userID}`,
       sKey: `USER#${userID}`,
     },
-    UpdateExpression: "set name = :name",
-    ExpressionAttributeValues: {
-      ":name": name,
-    },
-    ConditionExpression: "emailVerified = :emailVerified",
-    ExpressionAttributeValues: {
-      ":emailVerified": true,
-    },
   };
+  // const params = {
+  //   TableName: `${process.env.AWS_DB_NAME}users`,
+  //   Key: {
+  //     pKey: `USER#${userID}`,
+  //     sKey: `USER#${userID}`,
+  //   },
+  //   UpdateExpression: "set name = :name",
+  //   ExpressionAttributeValues: {
+  //     ":name": name,
+  //   },
+  //   ConditionExpression: "emailVerified = :emailVerified",
+  //   ExpressionAttributeValues: {
+  //     ":emailVerified": true,
+  //   },
+  // };
 
-  const command = new UpdateCommand(params);
+  // const command = new UpdateCommand(params);
   try {
+    const command = new QueryCommand(params);
+    const data = await dynamoDB.send(command);
+    if (data.Items.length === 0) {
+      return {
+        success: false,
+        message: "User not found",
+      };
+    }
+
     await dynamoDB.send(command);
     return {
       success: true,
@@ -59,6 +75,3 @@ export async function enrollGoal(userID, goalID) {
     throw new Error(error);
   }
 }
-
-
-

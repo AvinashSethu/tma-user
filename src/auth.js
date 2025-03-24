@@ -47,7 +47,7 @@ export default NextAuth({
           if (!isValid) {
             throw new Error("Invalid password");
           }
-          console.log("user", user);
+          // console.log("user", user);
           return {
             id: user.pKey.split("#")[1],
             email: user.email,
@@ -55,6 +55,7 @@ export default NextAuth({
             role: user.role,
             status: user.status,
             emailVerified: user.emailVerified,
+            provider: user.provider,
             image: user.image,
           };
         } catch (error) {
@@ -65,6 +66,11 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "select_account",
+        },
+      },
       profile(profile) {
         return {
           id: profile.sub,
@@ -73,6 +79,7 @@ export default NextAuth({
           image: profile.picture,
           role: "user",
           status: "active",
+          provider: profile.provider,
           createdAt: Date.now(),
           updatedAt: Date.now(),
         };
@@ -85,9 +92,16 @@ export default NextAuth({
   callbacks: {
     async jwt(params) {
       const { token, user } = params;
+      console.log("user", user);
+
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.emailVerified = user.emailVerified;
+        token.name = user.name;
+        token.email = user.email;
+        token.image = user.image;
+        token.provider = user.provider;
       }
       return token;
     },
@@ -98,6 +112,7 @@ export default NextAuth({
       if (token) session.user.name = token.name;
       if (token) session.user.email = token.email;
       if (token) session.user.image = token.image;
+      if (token) session.user.provider = token.provider;
       return session;
     },
     async signIn(params) {
@@ -108,15 +123,14 @@ export default NextAuth({
       return true;
     },
   },
-  events: {
-    async createUser(params) {
-      console.log("New user created:", params);
-        
-      // await updateUserEmailVerified(params.user.email);
-    },
-  },
+  // events: {
+  //   async createUser(params) {
+  //     console.log("New user created:", params);
+  //     await updateUserEmailVerified(params.user.email);
+  //   },
+  // },
   pages: {
     signIn: "/signIn",
   },
-  debug: process.env.NODE_ENV === "development",
+  // debug: process.env.NODE_ENV === "development",
 });

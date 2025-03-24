@@ -29,7 +29,11 @@ const FormSignIn = memo(() => {
   // Redirect if already logged in
   useEffect(() => {
     if (session) {
-      if (!session.user.name) {
+      if (
+        !session.user.name ||
+        (session.user.provider === "google" &&
+          session.user.emailVerified === null)
+      ) {
         router.push("/profile-setup");
       } else {
         router.push("/dashboard");
