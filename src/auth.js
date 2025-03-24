@@ -111,7 +111,8 @@ export default NextAuth({
   events: {
     async createUser(params) {
       console.log("New user created:", params);
-      await updateUserEmailVerified(params.user.email);
+        
+      // await updateUserEmailVerified(params.user.email);
     },
   },
   pages: {

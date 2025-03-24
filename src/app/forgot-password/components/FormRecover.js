@@ -356,7 +356,7 @@ export default function FormRecover() {
     updateFormState({ isLoading: true });
 
     try {
-      const result = await fetch("/api/auth/forget-password", {
+      const result = await fetch("/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -398,7 +398,7 @@ export default function FormRecover() {
       updateFormState({ isLoading: true });
 
       try {
-        const result = await fetch("/api/auth/forget-password/verify-otp", {
+        const result = await fetch("/api/auth/forgot-password/verify-otp", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, otp: otpToVerify }),
@@ -407,7 +407,7 @@ export default function FormRecover() {
         const data = await result.json();
 
         if (data.success) {
-          router.push(`/forget-password?token=${data.data.token}`);
+          router.push(`/forgot-password?token=${data.data.token}`);
         } else {
           enqueueSnackbar(data.message || "Invalid OTP", {
             variant: "error",
@@ -473,7 +473,7 @@ export default function FormRecover() {
     updateFormState({ isLoading: true });
 
     try {
-      const result = await fetch("/api/auth/forget-password/update-password", {
+      const result = await fetch("/api/auth/forgot-password/update-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password, token }),
@@ -504,7 +504,7 @@ export default function FormRecover() {
             otp: "",
             token: null,
           });
-          router.replace("/forget-password");
+          router.replace("/forgot-password");
         }
       }
     } catch (error) {

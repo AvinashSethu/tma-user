@@ -48,7 +48,7 @@ export function generateOTP() {
  * @returns {string} - The generated token.
  */
 export function generateToken(payload) {
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "10m" });
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "5m" });
 }
 
 /**

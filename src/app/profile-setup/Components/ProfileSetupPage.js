@@ -74,10 +74,10 @@ export default function ProfileSetupPage() {
                 color: "var(--text2)",
               }}
             >
-              Username
+              Name
             </Typography>
             <StyledTextField
-              placeholder="Enter your email"
+              placeholder="Enter your full name"
               sx={{ width: "350px" }}
             />
           </Stack>
