@@ -3,7 +3,7 @@ import Image from "next/image";
 import SignInBanner from "../signUp/Components/SignInBanner";
 import FormRecover from "./components/FormRecover";
 
-export default function ForgetPassword() {
+export default function ForgotPassword() {
   return (
     <Stack flexDirection="row" width="100%">
       <Stack

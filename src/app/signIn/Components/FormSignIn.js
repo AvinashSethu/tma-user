@@ -27,11 +27,19 @@ const FormSignIn = memo(() => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   // Redirect if already logged in
-  // useEffect(() => {
-  //   if (session) {
-  //     router.push("/dashboard");
-  //   }
-  // }, [session, router]);
+  useEffect(() => {
+    if (session) {
+      if (!session.user.name) {
+        router.push("/profile-setup");
+      } else {
+        router.push("/dashboard");
+      }
+    }
+  }, [session, router]);
+
+  useEffect(() => {
+    console.log("session", session);
+  }, [session]);
 
   // Show error snackbar when error message changes
   useEffect(() => {
@@ -80,11 +88,11 @@ const FormSignIn = memo(() => {
           isLoading: false,
         }));
       } else {
-        router.push("/dashboard");
+        // router.push("/dashboard");
         setFormState((prev) => ({ ...prev, isLoading: false }));
       }
     },
-    [formState.email, formState.password, router]
+    [formState.email, formState.password]
   );
 
   const handleGoogleSignIn = useCallback(async () => {
@@ -188,7 +196,7 @@ const FormSignIn = memo(() => {
             color: "var(--sec-color)",
             cursor: "pointer",
           }}
-          onClick={() => router.push("/forget-password")}
+          onClick={() => router.push("/forgot-password")}
         >
           Forgot Password
         </Typography>
