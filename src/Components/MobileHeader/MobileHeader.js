@@ -1,5 +1,6 @@
 import { Avatar, Button, Stack } from "@mui/material";
 import Image from "next/image";
+import mastersLogo from "@/public/images/masters-logo.svg";
 
 export default function MobileHeader() {
   return (
@@ -18,7 +19,7 @@ export default function MobileHeader() {
     >
       <Stack>
         <Image
-          src={process.env.NEXT_PUBLIC_LOGO_URL}
+          src={mastersLogo.src}
           alt="logo"
           width={60}
           height={26}

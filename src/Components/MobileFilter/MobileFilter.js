@@ -9,7 +9,7 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import { TuneRounded } from "@mui/icons-material";
 
 export default function MobileFilter() {
   const [open, setOpen] = useState(false);
@@ -35,20 +35,8 @@ export default function MobileFilter() {
 
   return (
     <>
-      <IconButton
-        onClick={openDrawer}
-        sx={{
-          backgroundColor: "white",
-          boxShadow: 2,
-          borderRadius: "10px",
-          width: { xs: "36px", sm: "40px" },
-          height: { xs: "36px", sm: "40px" },
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <FilterListIcon fontSize="small" />
+      <IconButton onClick={openDrawer}>
+        <TuneRounded sx={{ color: "var(--text2)" }} />
       </IconButton>
 
       <Drawer
@@ -70,7 +58,6 @@ export default function MobileFilter() {
           <Typography variant="h6" fontWeight="bold" textAlign="center">
             Filters
           </Typography>
-
           {filterOptions.map(({ label, key }) => (
             <Select
               key={key}
@@ -78,16 +65,24 @@ export default function MobileFilter() {
               onChange={(e) => handleFilterChange(key, e.target.value)}
               displayEmpty
               fullWidth
+              size="small"
               sx={{
                 backgroundColor: "white",
                 borderRadius: "8px",
                 fontSize: { xs: "14px", sm: "16px" },
                 padding: { xs: "8px", sm: "10px" },
+                maxHeight: "40px",
               }}
             >
-              <MenuItem value="">{label}</MenuItem>
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
+              <MenuItem value="" sx={{ fontSize: "14px" }}>
+                {label}
+              </MenuItem>
+              <MenuItem value="option1" sx={{ fontSize: "14px" }}>
+                Option 1
+              </MenuItem>
+              <MenuItem value="option2" sx={{ fontSize: "14px" }}>
+                Option 2
+              </MenuItem>
             </Select>
           ))}
 

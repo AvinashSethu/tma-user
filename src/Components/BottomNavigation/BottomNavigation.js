@@ -1,6 +1,5 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import home from "@/public/icons/home_icon.svg";
 import exam from "@/public/icons/exam_icon.svg";
@@ -9,17 +8,21 @@ import myLearning from "@/public/icons/myLearning.svg";
 import Image from "next/image";
 
 export default function MobileBottomNav() {
-  const [value, setValue] = useState(0);
   const router = useRouter();
+  const pathname = usePathname();
+  const routeMap = [
+    "/dashboard/home",
+    "/dashboard",
+    "/dashboard/exam/exams",
+    "/dashboard/courses",
+    "/dashboard/profile",
+  ];
+  const currentIndex = routeMap.indexOf(pathname);
+  const value = currentIndex !== -1 ? currentIndex : 0;
 
   const handleNavigationChange = (event, newValue) => {
     if (newValue !== value) {
-      setValue(newValue);
-      if (newValue === 0) router.push("/dashboard/home");
-      if (newValue === 1) router.push("/dashboard");
-      if (newValue === 2) router.push("/dashboard/exam/exams");
-      if (newValue === 3) router.push("/dashboard/courses");
-      if (newValue === 4) router.push("/dashboard/profile");
+      router.push(routeMap[newValue]);
     }
   };
 
@@ -38,103 +41,37 @@ export default function MobileBottomNav() {
         zIndex: 1,
       }}
     >
-      <BottomNavigationAction
-        label="Home"
-        icon={
-          <Image
-            src={home.src}
-            alt="Home"
-            width={16}
-            height={20}
-            style={{ opacity: value === 0 ? 1 : 0.6 }}
-          />
-        }
-        sx={{
-          "& .MuiBottomNavigationAction-label": {
-            fontSize: value === 0 ? "12px" : "10px",
-            color: value === 0 ? "var(--primary-color)" : "var(--text3)",
-            marginTop: "3px",
-          },
-        }}
-      />
-      <BottomNavigationAction
-        label="My Learning"
-        icon={
-          <Image
-            src={myLearning.src}
-            alt="Home"
-            width={20}
-            height={20}
-            style={{ opacity: value === 1 ? 1 : 0.6 }}
-          />
-        }
-        sx={{
-          "& .MuiBottomNavigationAction-label": {
-            fontSize: value === 1 ? "12px" : "10px",
-            color: value === 1 ? "var(--primary-color)" : "var(--text3)",
-            marginTop: "3px",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-          },
-        }}
-      />
-      <BottomNavigationAction
-        label="Exam"
-        icon={
-          <Image
-            src={exam.src}
-            alt="Home"
-            width={16}
-            height={18}
-            style={{ opacity: value === 2 ? 1 : 0.6 }}
-          />
-        }
-        sx={{
-          "& .MuiBottomNavigationAction-label": {
-            fontSize: value === 2 ? "12px" : "10px",
-            color: value === 2 ? "var(--primary-color)" : "var(--text3)",
-            marginTop: "3px",
-          },
-        }}
-      />
-      <BottomNavigationAction
-        label="Courses"
-        icon={
-          <Image
-            src={courses.src}
-            alt="Home"
-            width={18}
-            height={20}
-            style={{ opacity: value === 3 ? 1 : 0.6 }}
-          />
-        }
-        sx={{
-          "& .MuiBottomNavigationAction-label": {
-            fontSize: value === 3 ? "12px" : "10px",
-            color: value === 3 ? "var(--primary-color)" : "var(--text3)",
-            marginTop: "3px",
-          },
-        }}
-      />
-      <BottomNavigationAction
-        label="Profile"
-        icon={
-          <Image
-            src={home.src}
-            alt="Home"
-            width={16}
-            height={18}
-            style={{ opacity: value === 4 ? 1 : 0.6 }}
-          />
-        }
-        sx={{
-          "& .MuiBottomNavigationAction-label": {
-            fontSize: value === 4 ? "12px" : "10px",
-            color: value === 4 ? "var(--primary-color)" : "var(--text3)",
-            marginTop: "3px",
-          },
-        }}
-      />
+      {[
+        { label: "Home", icon: home, index: 0 },
+        { label: "My Learning", icon: myLearning, index: 1 },
+        { label: "Exam", icon: exam, index: 2 },
+        { label: "Courses", icon: courses, index: 3 },
+        { label: "Profile", icon: home, index: 4 },
+      ].map(({ label, icon, index }) => (
+        <BottomNavigationAction
+          key={index}
+          label={label}
+          icon={
+            <Image
+              src={icon.src}
+              alt={label}
+              width={16}
+              height={20}
+              style={{ opacity: value === index ? 1 : 0.6 }}
+            />
+          }
+          sx={{
+            "& .MuiBottomNavigationAction-label": {
+              fontSize: value === index ? "12px" : "10px",
+              color: value === index ? "var(--primary-color)" : "var(--text3)",
+              marginTop: "3px",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            },
+          }}
+        />
+      ))}
     </BottomNavigation>
   );
 }

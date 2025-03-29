@@ -15,6 +15,7 @@ import TestSeries from "./TestSeries";
 import PracticeTest from "../../../home/Components/PracticeTest";
 import MyClassroom from "../../../myClassroom/page";
 import History from "../../history/page";
+import ExamHistoryResponsive from "@/src/Components/ExamHistoryResponsive/ExamHistoryResponsive";
 
 export default function ResponsiveTestSeries() {
   const [expanded, setExpanded] = useState(false);
@@ -24,7 +25,7 @@ export default function ResponsiveTestSeries() {
 
   return (
     <Stack sx={{ display: { xs: "block", md: "none" } }}>
-      <Stack >
+      <Stack>
         <Stack sx={{ marginBottom: "15px" }}>
           <MobileHeader />
         </Stack>
@@ -186,7 +187,7 @@ export default function ResponsiveTestSeries() {
         <MyClassroom />
       </Stack>
       <Stack>
-        <History />
+        <ExamHistoryResponsive />
       </Stack>
     </Stack>
   );

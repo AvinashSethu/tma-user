@@ -12,6 +12,7 @@ import { useState } from "react";
 import more_img from "@/public/icons/More.svg";
 import students_img from "@/public/icons/Students.svg";
 import logout_img from "@/public/icons/Logout.svg";
+import { HowToRegRounded } from "@mui/icons-material";
 
 export default function Account({ isSideNavOpen }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -111,6 +112,20 @@ export default function Account({ isSideNavOpen }) {
         >
           <Image src={students_img.src} alt="profile" width={16} height={16} />
           Profile
+        </MenuItem>
+        <MenuItem
+          sx={{
+            gap: "10px",
+            fontFamily: "Lato",
+            fontSize: "14px",
+            fontWeight: "700",
+          }}
+        >
+          <HowToRegRounded
+            sx={{ color: "var(--primary-color)" }}
+            fontSize="small"
+          />
+          Upgrade to PRO
         </MenuItem>
         <MenuItem
           sx={{

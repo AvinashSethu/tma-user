@@ -10,7 +10,6 @@ import {
   PauseCircle,
   PlayCircle,
 } from "@mui/icons-material";
-import MobileFilter from "@/src/Components/MobileFilter/MobileFilter";
 
 export default function MyCourse() {
   const lessonList = [
@@ -70,7 +69,6 @@ export default function MyCourse() {
                 }}
               />
             </Stack>
-
             <Typography
               sx={{
                 typography: { xs: "subtitle1", sm: "h6" },
@@ -79,10 +77,6 @@ export default function MyCourse() {
             >
               About this course
             </Typography>
-
-            <Stack display={{ xs: "flex", md: "none" }}>
-              <MobileFilter />
-            </Stack>
 
             <Typography
               sx={{
@@ -102,9 +96,10 @@ export default function MyCourse() {
 
           <Stack
             gap="20px"
-            alignItems="flex-end"
+            alignItems={{ xs: "center", lg: "flex-end" }}
             flex={{ xs: "auto", lg: 0.6 }}
             width="100%"
+            sx={{ marginBottom: { xs: "60px", md: "0px" } }}
           >
             <CheckoutCard />
 

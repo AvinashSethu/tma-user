@@ -65,7 +65,7 @@ export default function Home() {
   return (
     <>
       <MobileHeader />
-      <Stack gap="20px" alignItems="center">
+      <Stack gap="20px">
         <Stack
           padding={{ xs: "10px", md: "20px" }}
           gap="20px"

@@ -6,6 +6,9 @@ import mocks from "@/public/icons/mocks.svg";
 import Header from "@/src/Components/Header/Header";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { ArrowBackIos } from "@mui/icons-material";
+import MobileHeader from "@/src/Components/MobileHeader/MobileHeader";
+import MobileFilter from "@/src/Components/MobileFilter/MobileFilter";
 
 export default function History() {
   const router = useRouter();
@@ -13,7 +16,6 @@ export default function History() {
     {
       title: "Placements (Institute)",
       icon: <Image src={mocks.src} alt="" width={24} height={24} />,
-      // icon: mocks.src,
       subTitle: (
         <Stack flexDirection="row" gap="20px">
           <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
@@ -38,7 +40,7 @@ export default function History() {
           </Typography>
           <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
             120 Questions
-          </Typography>
+          </Typography> 
           <Typography sx={{ fontFamily: "Lato", fontSize: "12px" }}>
             2024-08-05
           </Typography>
@@ -63,59 +65,84 @@ export default function History() {
       ),
     },
   ];
+
   return (
-    <Stack padding="20px" gap="20px">
-      <Stack sx={{ display: { xs: "none", md: "block" } }}>
-        <Header />
+    <>
+      <Stack sx={{ display: { xs: "block", md: "none" } }}>
+        <MobileHeader />
       </Stack>
       <Stack
-        sx={{
-          border: "1px solid var(--border-color)",
-          padding: "20px",
-          backgroundColor: "var(--white)",
-          borderRadius: "10px",
-          minHeight: "90vh",
-          gap: "20px",
-        }}
+        padding={{ xs: "10px", md: "20px" }}
+        sx={{ marginBottom: { xs: "60px", md: "0px" } }}
+        gap="20px"
       >
+        <Stack
+          sx={{
+            display: { xs: "none", md: "block" },
+          }}
+        >
+          <Header
+          back
+            button={[
+              <SearchBox key="search" />,
+              <Button
+                key="filter"
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  backgroundColor: "var(--primary-color)",
+                  width: "120px",
+                  fontFamily: "Lato",
+                }}
+              >
+                Filters
+              </Button>,
+            ]}
+          />
+        </Stack>
         <Stack
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography
-            sx={{ fontFamily: "Lato", fontSize: "20px", fontWeight: "700" }}
-          >
-            Exam History
-          </Typography>
-          <Stack flexDirection="row" gap="10px">
-            <SearchBox />
-            <Button
-              variant="contained"
-              sx={{
-                textTransform: "none",
-                backgroundColor: "var(--primary-color)",
-                width: "120px",
-                fontFamily: "Lato",
-              }}
+          <Stack flexDirection="row" gap="4px" alignItems="center">
+            <ArrowBackIos
+              onClick={() => router.back()}
+              fontSize="small"
+              sx={{ cursor: "pointer", display: { xs: "flex", md: "none" } }}
+            />
+            <Typography
+              sx={{ fontFamily: "Lato", fontSize: "20px", fontWeight: "700" }}
             >
-              Filters
-            </Button>
+              Exam History
+            </Typography>
+          </Stack>
+          <Stack gap="10px" display={{ xs: "flex", md: "none" }}>
+            <MobileFilter />
           </Stack>
         </Stack>
+        <Stack display={{ xs: "block", md: "none" }}>
+          <SearchBox />
+        </Stack>
         <Stack
-          flexDirection="row"
-          flexWrap="wrap"
-          gap="15px"
-          justifyContent="space-between"
+          sx={{
+            border: { xs: "none", md: "1px solid var(--border-color)" },
+            padding: { xs: "0px", md: "20px" },
+            backgroundColor: { xs: "transparent", md: "var(--white)" },
+            borderRadius: "10px",
+            minHeight: { xs: "auto", md: "90vh" },
+            gap: "20px",
+          }}
         >
-          {historyList.length > 0
-            ? historyList.map((item, index) => (
-                <SecondaryCard key={index} {...item} cardWidth="49%" />
-              ))
-            : ""}
+          <Stack flexDirection="row" flexWrap="wrap" gap="20px">
+            {historyList.length > 0
+              ? historyList.map((item, index) => (
+                  <SecondaryCard key={index} {...item} cardWidth="500px" />
+                ))
+              : ""}
+          </Stack>
         </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 }

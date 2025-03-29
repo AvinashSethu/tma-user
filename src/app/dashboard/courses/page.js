@@ -17,7 +17,11 @@ export default function Courses() {
   return (
     <Stack>
       <MobileHeader />
-      <Stack padding={{ xs: "5px", md: "20px" }} paddingBottom={"30px"} gap="20px">
+      <Stack
+        padding={{ xs: "5px", md: "20px" }}
+        paddingBottom={"30px"}
+        gap="20px"
+      >
         <Stack sx={{ display: { xs: "none", md: "block" } }}>
           <Header button={[<SearchBox key={"search"} />]} />
         </Stack>
@@ -41,7 +45,7 @@ export default function Courses() {
           </Typography>
           <MyCourses />
         </Stack>
-        <Stack gap="10px">
+        <Stack gap="10px" sx={{ marginBottom: "60px" }}>
           <Typography
             sx={{ fontFamily: "Lato", fontSize: "16px", fontWeight: "700" }}
           >
