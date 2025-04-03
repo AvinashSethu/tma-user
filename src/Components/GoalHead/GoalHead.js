@@ -1,7 +1,7 @@
 "use client";
 import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import gate_cse from "@/public/Icons/gate_cse.svg";
+import gate_cse from "@/public/icons/gate_cse.svg";
 import { ArrowBackIosRounded, East } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 
