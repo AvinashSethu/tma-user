@@ -2,6 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import SignInBanner from "../signUp/Components/SignInBanner";
 import FormRecover from "./components/FormRecover";
+import { Suspense } from "react";
 
 export default function ForgotPassword() {
   return (
