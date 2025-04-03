@@ -5,6 +5,7 @@ import FormRecover from "./components/FormRecover";
 
 export default function ForgotPassword() {
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <Stack flexDirection="row" width="100%">
       <Stack
         width="50%"
@@ -102,5 +103,6 @@ export default function ForgotPassword() {
       </Stack>
       <SignInBanner />
     </Stack>
+</Suspense>
   );
 }
